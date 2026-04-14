@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Not Just Nonnas — Fresh Egg Pasta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #F9F5EE; --cream-d: #EFE8D8; --ink: #1C1A16; --ink-mid: #4A4640;
+    --ink-soft: #7A746C; --gold: #B8860B; --gold-l: #D4A017; --rust: #8B3A1C;
+    --border: rgba(28,26,22,0.12); --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); color: var(--ink); font-family: var(--sans); font-weight: 300; line-height: 1.7; font-size: 16px; }
+
+  header { background: var(--ink); color: var(--cream); padding: 3rem 2rem 2.5rem; text-align: center; position: relative; overflow: hidden; }
+  header::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.015) 40px, rgba(255,255,255,0.015) 41px); }
+  .brand-name { font-family: var(--serif); font-size: clamp(2.8rem, 7vw, 4.5rem); font-weight: 600; line-height: 1; color: var(--cream); margin-bottom: 0.3rem; }
+  .brand-tagline { font-family: var(--sans); font-weight: 300; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-l); margin-bottom: 1.25rem; }
+  .page-title { display: inline-block; font-family: var(--sans); font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream); border: 0.5px solid rgba(249,245,238,0.3); padding: 6px 18px; border-radius: 20px; margin-bottom: 1rem; }
+  .attribution { font-family: var(--serif); font-style: italic; font-size: 0.95rem; color: rgba(249,245,238,0.5); margin-top: 0.75rem; }
+
+  nav { background: var(--cream-d); border-bottom: 0.5px solid var(--border); padding: 0 2rem; display: flex; gap: 0; justify-content: center; position: sticky; top: 0; z-index: 100; }
+  nav a { font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; padding: 14px 20px; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
+  nav a.active, nav a:hover { color: var(--rust); border-bottom-color: var(--rust); }
+
+  main { max-width: 720px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+  .section-label { font-family: var(--sans); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+  .section-title { font-family: var(--serif); font-size: clamp(1.6rem, 4vw, 2rem); font-weight: 500; color: var(--ink); margin-bottom: 1.5rem; line-height: 1.2; }
+  .divider { border: none; border-top: 0.5px solid var(--border); margin: 3rem 0; }
+
+  /* UNIT TOGGLE */
+  .unit-toggle { display: flex; align-items: center; gap: 8px; margin-bottom: 1.5rem; }
+  .unit-btn { font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; padding: 5px 14px; border-radius: 20px; border: 0.5px solid var(--border); background: transparent; color: var(--ink-soft); cursor: pointer; transition: all 0.15s; }
+  .unit-btn.active { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+  .unit-label { font-size: 12px; color: var(--ink-soft); margin-right: 4px; }
+
+  .calc-wrap { background: white; border: 0.5px solid var(--border); border-radius: 12px; padding: 2rem; margin-bottom: 1.25rem; }
+  .calc-row { margin-bottom: 1.5rem; }
+  .calc-label { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 8px; display: block; }
+  .slider-row { display: flex; align-items: center; gap: 14px; }
+  input[type=range] { flex: 1; -webkit-appearance: none; height: 3px; background: var(--cream-d); border-radius: 2px; outline: none; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--rust); cursor: pointer; border: 2px solid white; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+  .slider-val { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; color: var(--ink); min-width: 110px; text-align: right; }
+
+  .toggle-wrap { display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; background: var(--cream); border-radius: 8px; border: 0.5px solid var(--border); }
+  .toggle { position: relative; width: 42px; height: 23px; flex-shrink: 0; margin-top: 2px; }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .toggle-track { position: absolute; inset: 0; background: var(--cream-d); border: 0.5px solid var(--border); border-radius: 12px; cursor: pointer; transition: background 0.2s; }
+  .toggle input:checked + .toggle-track { background: var(--rust); border-color: var(--rust); }
+  .toggle-thumb { position: absolute; top: 3px; left: 3px; width: 17px; height: 17px; background: white; border-radius: 50%; transition: transform 0.2s; pointer-events: none; }
+  .toggle input:checked ~ .toggle-thumb { transform: translateX(19px); }
+  .toggle-title { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 2px; }
+  .toggle-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+
+  .cards-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); margin: 1.5rem 0 8px; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  @media (max-width: 480px) { .cards { grid-template-columns: 1fr 1fr; } }
+  .card { background: var(--cream); border: 0.5px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+  .card-label { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px; }
+  .card-val { font-family: var(--serif); font-size: 1.5rem; font-weight: 500; color: var(--ink); line-height: 1.1; }
+  .card-sub { font-size: 12px; color: var(--ink-soft); margin-top: 3px; }
+  .calc-note { margin-top: 1.25rem; font-size: 13px; color: var(--ink-soft); line-height: 1.6; padding: 10px 14px; border-left: 2px solid var(--cream-d); }
+
+  .prose p { margin-bottom: 1.1rem; color: var(--ink-mid); font-size: 15px; line-height: 1.75; }
+  .prose strong { font-weight: 500; color: var(--ink); }
+  .prose h3 { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; color: var(--ink); margin: 1.75rem 0 0.5rem; }
+
+  .steps { counter-reset: step; list-style: none; }
+  .steps li { counter-increment: step; display: grid; grid-template-columns: 24px 1fr; gap: 0 16px; margin-bottom: 1rem; font-size: 15px; color: var(--ink-mid); line-height: 1.65; }
+  .steps li::before { grid-column: 1; padding-top: 1px; }
+  .steps li > * { grid-column: 2; }
+  .steps li::before { content: counter(step); font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--rust); }
+
+  .tip-block { background: white; border: 0.5px solid var(--border); border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 1rem 0; font-size: 13px; color: var(--ink-mid); line-height: 1.6; }
+  .tip-block strong { color: var(--ink); font-weight: 500; }
+
+  .storage-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 1rem; }
+  @media (max-width: 480px) { .storage-grid { grid-template-columns: 1fr; } }
+  .storage-card { background: white; border: 0.5px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .storage-card-title { font-family: var(--serif); font-size: 1rem; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+  .storage-card ul { list-style: none; padding: 0; }
+  .storage-card ul li { font-size: 13px; color: var(--ink-mid); padding: 3px 0 3px 14px; position: relative; line-height: 1.5; }
+  .storage-card ul li::before { content: '–'; position: absolute; left: 0; color: var(--gold); }
+
+  .tort-link-block { margin-top: 3rem; padding: 2rem; background: var(--ink); border-radius: 12px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .tort-link-block p { font-family: var(--serif); font-size: 1.2rem; font-style: italic; color: rgba(249,245,238,0.7); margin: 0; }
+  .tort-link-block strong { color: var(--cream); font-style: normal; }
+  .tort-btn { display: inline-block; font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream); border: 0.5px solid rgba(249,245,238,0.4); padding: 10px 22px; border-radius: 6px; text-decoration: none; white-space: nowrap; transition: background 0.2s; }
+  .tort-btn:hover { background: rgba(249,245,238,0.1); }
+
+  footer { background: var(--ink); color: rgba(249,245,238,0.4); text-align: center; padding: 2rem; font-size: 12px; letter-spacing: 0.05em; }
+  footer a { color: var(--gold-l); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1 class="brand-name">Not Just Nonnas</h1>
+  <p class="brand-tagline">Know How to Cook Italian</p>
+  <span class="page-title">Fresh Egg Pasta</span>
+  <p class="attribution">Recipe adapted by Dave &mdash; from Chef Maria Cristina, Parma, Italy &middot; 2025</p>
+</header>
+
+<nav>
+  <a href="#calculator" class="active">Calculator</a>
+  <a href="#recipe">Recipe</a>
+  <a href="#storage">Storage</a>
+  <a href="tortellini.html">Tortellini &rarr;</a>
+</nav>
+
+<main>
+
+  <section id="calculator" style="padding-top:1rem;">
+    <p class="section-label">Ingredient calculator</p>
+    <h2 class="section-title">How many are you feeding?</h2>
+
+    <div class="unit-toggle">
+      <span class="unit-label">Units:</span>
+      <button class="unit-btn active" id="btn-metric" onclick="setUnit('metric')">Metric (g)</button>
+      <button class="unit-btn" id="btn-imperial" onclick="setUnit('imperial')">Imperial (oz)</button>
+    </div>
+
+    <div class="calc-wrap">
+      <div class="calc-row">
+        <span class="calc-label">Portions</span>
+        <div class="slider-row">
+          <input type="range" id="portions" min="1" max="20" value="4" step="1">
+          <span class="slider-val" id="portions-out">4 portions</span>
+        </div>
+      </div>
+
+      <div class="toggle-wrap">
+        <label class="toggle">
+          <input type="checkbox" id="enriched">
+          <div class="toggle-track"></div>
+          <div class="toggle-thumb"></div>
+        </label>
+        <div>
+          <div class="toggle-title">Dave's version — enriched yolks</div>
+          <div class="toggle-desc">Extra egg yolks give the pasta a deeper golden color and richer flavor. Same method, more yolk weight. Substitute some whole eggs with yolks to reach the target weight — one yolk &asymp; 18g / 0.6oz &nbsp;&middot;&nbsp; one white &asymp; 30g / 1.1oz.</div>
+        </div>
+      </div>
+
+      <p class="cards-label">Ingredients</p>
+      <div class="cards" id="ingredient-cards"></div>
+
+      <p class="cards-label" style="margin-top:1.25rem;">Yield</p>
+      <div class="cards" id="yield-cards"></div>
+
+      <p class="calc-note" id="calc-note"></p>
+    </div>
+
+    <p style="font-size:13px; color:var(--ink-soft); line-height:1.6;">
+      Weigh your eggs rather than counting them &mdash; grocery store eggs vary from 45g&nbsp;(1.6oz) to 68g&nbsp;(2.4oz), and weight is the most reliable method. The approximate egg count shown is for reference only.
+    </p>
+  </section>
+
+  <hr class="divider">
+
+  <section id="recipe">
+    <p class="section-label">The recipe</p>
+    <h2 class="section-title">Fresh pasta</h2>
+
+    <div class="prose">
+      <p>This is Chef Maria Cristina's recipe as she taught it in Parma &mdash; a simple, honest dough that relies entirely on technique and good ingredients. The 60/40 split of <strong>"00" flour and semolina</strong> gives the pasta both tenderness and just enough bite.</p>
+    </div>
+
+    <ol class="steps">
+      <li>Place all ingredients in a mixing bowl and add salt to taste. For 1–4 portions, mix and knead by hand on a lightly floured surface. For larger batches, use a stand mixer with a dough hook.</li>
+      <li>Mix until the dough comes together, then knead until very smooth and elastic &mdash; about 8–10 minutes by hand, or 5–6 minutes in the mixer on medium speed.</li>
+      <li>Shape into a ball and cover loosely with plastic wrap or an overturned bowl. Rest for a minimum of 30 minutes at room temperature. The dough will relax and become noticeably softer and easier to roll.</li>
+      <li>Cut off a working portion, keeping the rest covered so it does not dry out. Press flat and feed through your pasta machine, working up gradually to setting 6 for most shapes &mdash; this gives a great texture for cut pasta. Setting 7 is very thin and delicate, best reserved for filled pasta like tortellini or ravioli.</li>
+      <li>Lay sheets on the counter to dry slightly, flipping once if the surface is very moist. Cut into your desired shape and cluster into nests.
+        <div class="tip-block" style="margin-top:10px;">
+          <strong>Rice flour tip:</strong> Dust nests with rice flour rather than semolina if you have it. Rice flour's extremely fine, dry particles don't absorb moisture from the pasta the way semolina can, so the nests stay more separate, dry more evenly, and are far less likely to stick or clump together &mdash; especially important if you're drying or freezing. Semolina works fine if that's what you have; no need to purchase rice flour just for this.
+        </div>
+      </li>
+      <li>Cook in well-salted boiling water. Fresh pasta cooks fast &mdash; about 3 to 4 minutes depending on thickness. Taste early.</li>
+    </ol>
+
+    <div class="prose" style="margin-top:1.5rem;">
+      <h3>Dave's note on yolks</h3>
+      <p>I've taken to adding extra egg yolks &mdash; for a 4-portion batch, one additional yolk; for 8 portions, two additional yolks, and so on. The result is a noticeably deeper golden color and a richer, more egg-forward flavor. Use the <strong>enriched yolks toggle</strong> in the calculator above to get the adjusted gram target, then achieve it with your own yolk-to-white ratio.</p>
+      <h3>A note on salt</h3>
+      <p>Add a generous pinch directly to the dough. The pasta water should be well-salted separately &mdash; the dough itself benefits from a little seasoning as well.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section id="storage">
+    <p class="section-label">Storing your pasta</p>
+    <h2 class="section-title">Fresh, dried, or frozen</h2>
+
+    <div class="prose">
+      <p>Fresh pasta is best cooked the day it's made, but it keeps well with a little planning. The key distinction is whether your pasta is <strong>partially dried</strong> (still pliable) or <strong>fully dried</strong> (brittle, snaps cleanly like store-bought).</p>
+    </div>
+
+    <div class="storage-grid">
+      <div class="storage-card">
+        <p class="storage-card-title">Partially dried &mdash; still pliable</p>
+        <ul>
+          <li>Paper bag at room temp: 1–2 days max</li>
+          <li>Refrigerate in a lightly floured container: up to 3 days</li>
+          <li>Risk of mold in humid conditions &mdash; when in doubt, refrigerate</li>
+        </ul>
+      </div>
+      <div class="storage-card">
+        <p class="storage-card-title">Fully dried &mdash; brittle</p>
+        <ul>
+          <li>Allow 24–48 hours depending on humidity and thickness</li>
+          <li>Paper bag in a cool dry pantry: 4–8 weeks</li>
+          <li>Airtight jar or tin after drying: 2–3 months or longer</li>
+        </ul>
+      </div>
+      <div class="storage-card">
+        <p class="storage-card-title">Freezing pasta nests</p>
+        <ul>
+          <li>Dust nests with rice flour before forming &mdash; its fine dry particles prevent sticking far better than semolina (use semolina if that's all you have)</li>
+          <li>Flash-freeze on a tray in a single layer for 1–2 hours until firm</li>
+          <li>Transfer to a freezer bag &mdash; they'll stay separate</li>
+          <li>Keeps well for up to 2 months with no noticeable quality loss</li>
+        </ul>
+      </div>
+      <div class="storage-card">
+        <p class="storage-card-title">Cooking from frozen</p>
+        <ul>
+          <li>Drop frozen nests directly into boiling salted water &mdash; no thawing needed</li>
+          <li>Add 1–2 minutes to your usual cook time</li>
+          <li>Taste early &mdash; they cook faster than you might expect</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="tort-link-block">
+    <p><strong>Making tortellini?</strong> The pasta is the same &mdash; the adventure is just beginning.</p>
+    <a href="tortellini.html" class="tort-btn">Tortellini in Brodo &rarr;</a>
+  </div>
+
+</main>
+
+<footer>
+  <p style="margin-bottom:6px;">Not Just Nonnas &mdash; Know How to Cook Italian</p>
+  <p>Have a question for Dave? <a href="mailto:dave@musel.us">Click here</a></p>
+</footer>
+
+<script>
+  const BASE = 8, F00 = 240, SEM = 160, EGG_STD = 220, EGG_ENR = 240, EGG_AVG = 50;
+  let unit = 'metric';
+
+  function setUnit(u) {
+    unit = u;
+    document.getElementById('btn-metric').className = 'unit-btn' + (u==='metric' ? ' active' : '');
+    document.getElementById('btn-imperial').className = 'unit-btn' + (u==='imperial' ? ' active' : '');
+    update();
+  }
+
+  function fmt(g) {
+    if (unit === 'imperial') {
+      const oz = g / 28.3495;
+      return oz < 10 ? oz.toFixed(1) + ' oz' : oz.toFixed(1) + ' oz';
+    }
+    return Math.round(g) + 'g';
+  }
+
+  function fmtYield(g) {
+    if (unit === 'imperial') {
+      const oz = g / 28.3495;
+      return '~' + oz.toFixed(1) + ' oz';
+    }
+    return '~' + Math.round(g) + 'g';
+  }
+
+  function card(label, val, sub) {
+    return `<div class="card"><div class="card-label">${label}</div><div class="card-val">${val}</div><div class="card-sub">${sub}</div></div>`;
+  }
+
+  function update() {
+    const p = parseInt(document.getElementById('portions').value);
+    const enr = document.getElementById('enriched').checked;
+    document.getElementById('portions-out').textContent = p + ' portion' + (p === 1 ? '' : 's');
+
+    const r = p / BASE;
+    const f00g  = F00 * r;
+    const semg  = SEM * r;
+    const eggsg = (enr ? EGG_ENR : EGG_STD) * r;
+    const approx = (eggsg / EGG_AVG).toFixed(1);
+    const totalg = f00g + semg + eggsg;
+    const mainG = totalg * 0.78;
+    const firstG = totalg * 0.52;
+
+    const enrichedBadge = enr ? ' <span style="font-size:11px;background:#8B3A1C;color:white;padding:1px 7px;border-radius:4px;vertical-align:middle;margin-left:4px;">enriched</span>' : '';
+
+    document.getElementById('ingredient-cards').innerHTML =
+      card('"00" flour', fmt(f00g), '60% of flour weight') +
+      card('Semolina flour', fmt(semg), '40% of flour weight') +
+      card('Eggs' + enrichedBadge, fmt(eggsg), '&asymp; ' + approx + ' eggs');
+
+    document.getElementById('yield-cards').innerHTML =
+      card('Total dough', fmt(totalg), 'before resting') +
+      card('Main course', fmtYield(mainG), p + ' generous portions') +
+      card('First course', fmtYield(firstG), p + ' lighter portions');
+
+    const noteText = enr
+      ? 'Dave\'s version: ' + fmt(eggsg) + ' total egg weight using extra yolks. Swap some whole eggs for additional yolks to hit this weight. One yolk \u2248 18g (0.6oz) \u00b7 one white \u2248 30g (1.1oz).'
+      : 'Standard: ' + fmt(eggsg) + ' total egg weight (\u2248 ' + approx + ' whole eggs at 50g avg). Weigh your eggs \u2014 grocery store eggs vary from 45g to 68g.';
+    document.getElementById('calc-note').textContent = noteText;
+  }
+
+  document.getElementById('portions').addEventListener('input', update);
+  document.getElementById('enriched').addEventListener('change', update);
+  update();
+</script>
+</body>
+</html>
