@@ -21,17 +21,19 @@
 
   /* BRAND CHROME */
   .pg-topbar { height: 12px; background: #5E82A0; }
-  .pg-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 32px; background: var(--cream); }
-  .pg-header a img { display: block; width: 100px; }
-  .pg-back { font-family: var(--sans); font-size: 12px; color: #5E82A0; text-decoration: none; }
-  .pg-hero { height: 160px; overflow: hidden; }
-  .pg-hero img { width: 100%; height: 100%; object-fit: cover; object-position: center 50%; -webkit-mask-image: linear-gradient(to right, transparent, black 30%); mask-image: linear-gradient(to right, transparent, black 30%); }
 
-  /* PAGE TITLE BLOCK */
-  .pg-title-block { background: var(--cream); padding: 36px 32px 28px; border-bottom: 0.5px solid rgba(28,26,22,0.08); }
-  .pg-eyebrow { font-family: var(--sans); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: #5E82A0; margin-bottom: 8px; }
-  .pg-title { font-family: var(--serif); font-style: italic; font-size: 2.6rem; font-weight: 400; color: var(--ink); line-height: 1.2; margin-bottom: 8px; }
-  .pg-attr { font-family: var(--serif); font-style: italic; font-size: 0.88rem; color: #AAA49C; }
+  .pg-hero { position: relative; height: 200px; overflow: hidden; }
+  .pg-hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 50%; }
+  .pg-hero-grad { position: absolute; inset: 0; background: linear-gradient(to right, #F0EDE7 0px, #F0EDE7 130px, rgba(240,237,231,0.55) 220px, transparent 380px); z-index: 1; }
+  .pg-hero-inner { position: absolute; inset: 0; display: flex; align-items: center; padding: 0 36px; gap: 28px; z-index: 2; }
+  .pg-hero-inner > a img { display: block; width: 100px; flex-shrink: 0; }
+  .pg-hero-text { display: flex; flex-direction: column; gap: 5px; }
+  .pg-eyebrow { font-family: var(--sans); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,237,231,0.85); text-shadow: 0 1px 3px rgba(0,0,0,0.4); }
+  .pg-title { font-family: var(--serif); font-style: italic; font-size: 2.2rem; font-weight: 400; color: #F0EDE7; line-height: 1.15; text-shadow: 0 1px 5px rgba(0,0,0,0.35); }
+  .pg-attr { font-family: var(--serif); font-style: italic; font-size: 0.85rem; color: rgba(240,237,231,0.7); text-shadow: 0 1px 3px rgba(0,0,0,0.4); }
+
+  .pg-back-row { display: flex; justify-content: flex-end; padding: 7px 32px; background: var(--cream); border-bottom: 0.5px solid rgba(28,26,22,0.06); }
+  .pg-back { font-family: var(--sans); font-size: 12px; color: #5E82A0; text-decoration: none; }
 
   nav { background: var(--cream); border-bottom: 0.5px solid rgba(28,26,22,0.1); padding: 0 2rem; display: flex; gap: 0; justify-content: center; position: sticky; top: 0; z-index: 100; }
   nav a { font-family: var(--sans); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #7A746C; text-decoration: none; padding: 14px 20px; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
@@ -113,13 +115,21 @@
 
 <div class="pg-topbar"></div>
 
-<div class="pg-header">
-  <a href="https://daveandmike.net"><img src="assets/dnm_logo.svg" alt="dave&amp;mike"></a>
-  <a href="index.html" class="pg-back">← Kitchen</a>
+<div class="pg-hero">
+  <img class="pg-hero-img" src="assets/kitchen_header.png" alt="">
+  <div class="pg-hero-grad"></div>
+  <div class="pg-hero-inner">
+    <a href="https://daveandmike.net"><img src="assets/dnm_logo.svg" alt="dave&amp;mike"></a>
+    <div class="pg-hero-text">
+      <p class="pg-eyebrow">Recipe</p>
+      <h1 class="pg-title">Fresh egg pasta</h1>
+      <p class="pg-attr">Adapted from Chef Maria Cristina, Parma, Italy &middot; 2025</p>
+    </div>
+  </div>
 </div>
 
-<div class="pg-hero">
-  <img src="assets/kitchen_header.png" alt="">
+<div class="pg-back-row">
+  <a href="index.html" class="pg-back">← Kitchen</a>
 </div>
 
 <nav>
@@ -128,12 +138,6 @@
   <a href="#storage">Storage</a>
   <a href="tortellini.html">Tortellini &rarr;</a>
 </nav>
-
-<div class="pg-title-block">
-  <p class="pg-eyebrow">Recipe</p>
-  <h1 class="pg-title">Fresh egg pasta</h1>
-  <p class="pg-attr">Adapted from Chef Maria Cristina, Parma, Italy &middot; 2025</p>
-</div>
 
 <main>
 
