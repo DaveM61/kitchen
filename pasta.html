@@ -30,7 +30,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to right, #F0EDE7 0px, #F0EDE7 130px, rgba(240,237,231,0.55) 220px, transparent 380px);
+    background: linear-gradient(to right, #F0EDE7 0%, #F0EDE7 25%, rgba(240,237,231,0.6) 42%, transparent 58%);
   }
   .pg-hero-inner {
     position: relative;
@@ -48,11 +48,11 @@
   .pg-chrome-nav a { font-family: var(--sans); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #7A746C; text-decoration: none; padding: 14px 20px; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
   .pg-chrome-nav a.active, .pg-chrome-nav a:hover { color: #5E82A0; border-bottom-color: #5E82A0; }
 
-  /* PAGE TITLE BLOCK */
-  .pg-title-block { background: var(--cream); padding: 36px 32px 28px 136px; border-bottom: 0.5px solid rgba(28,26,22,0.08); }
-  .pg-eyebrow { font-family: var(--sans); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: #5E82A0; margin-bottom: 8px; }
-  .pg-title { font-family: var(--serif); font-style: italic; font-size: 2.6rem; font-weight: 400; color: var(--ink); line-height: 1.2; margin-bottom: 8px; }
-  .pg-attr { font-family: var(--serif); font-style: italic; font-size: 0.88rem; color: #AAA49C; }
+  /* PAGE TITLE BLOCK — now lives inside .pg-hero-inner */
+  .pg-hero-title { margin-left: 28px; position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; }
+  .pg-eyebrow { font-family: var(--sans); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: #5E82A0; margin-bottom: 6px; }
+  .pg-title { font-family: var(--serif); font-style: italic; font-size: 2rem; font-weight: 400; color: var(--ink); line-height: 1.2; margin-bottom: 4px; }
+  .pg-attr { font-family: var(--serif); font-style: italic; font-size: 0.85rem; color: #AAA49C; }
 
   main { max-width: 720px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
   .section-label { font-family: var(--sans); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: #5E82A0; margin-bottom: 0.5rem; }
@@ -134,6 +134,11 @@
 <div class="pg-hero">
   <div class="pg-hero-inner">
     <a href="https://daveandmike.net"><img src="assets/dnm_logo.svg" alt="dave&amp;mike"></a>
+    <div class="pg-hero-title">
+      <p class="pg-eyebrow">Kitchen</p>
+      <h1 class="pg-title">Fresh egg pasta</h1>
+      <p class="pg-attr">Adapted from Chef Maria Cristina, Parma, Italy &middot; 2025</p>
+    </div>
   </div>
 </div>
 
@@ -150,11 +155,6 @@
   </div>
 </div>
 
-<div class="pg-title-block">
-  <p class="pg-eyebrow">Kitchen</p>
-  <h1 class="pg-title">Fresh egg pasta</h1>
-  <p class="pg-attr">Adapted from Chef Maria Cristina, Parma, Italy &middot; 2025</p>
-</div>
 
 <main>
 
