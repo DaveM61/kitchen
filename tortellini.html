@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tortellini in Brodo — dave&amp;mike · Kitchen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #F0EDE7; --cream-d: #E8E2D8; --ink: #1C1A16; --ink-mid: #4A4640;
+    --ink-soft: #7A746C; --gold: #5E82A0; --gold-l: #5E82A0; --rust: #5E82A0;
+    --slate: #5E82A0;
+    --border: rgba(28,26,22,0.12); --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+  html { scroll-behavior: smooth; scroll-padding-top: 52px; }
+  body { background: var(--cream); color: var(--ink); font-family: var(--sans); font-weight: 300; line-height: 1.7; font-size: 16px; }
+
+  /* BRAND CHROME */
+  .pg-topbar { height: 12px; background: #5E82A0; }
+
+  .pg-hero {
+    background: url(assets/kitchen_header.png) center 50% / cover no-repeat;
+    position: relative;
+  }
+  .pg-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, #F0EDE7 0%, #F0EDE7 25%, rgba(240,237,231,0.6) 42%, transparent 58%);
+  }
+  .pg-hero-inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 12px 36px;
+    z-index: 1;
+  }
+  .pg-hero-inner > a img { display: block; width: 100px; flex-shrink: 0; }
+
+  .pg-chrome-bar { background: var(--cream); border-bottom: 0.5px solid rgba(28,26,22,0.1); padding: 0 32px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; position: sticky; top: 0; z-index: 100; }
+  .pg-chrome-right { display: flex; justify-content: flex-end; }
+  .pg-back { font-family: var(--sans); font-size: 12px; color: #5E82A0; text-decoration: none; padding: 14px 0; }
+  .pg-chrome-nav { display: flex; gap: 0; }
+  .pg-chrome-nav a { font-family: var(--sans); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #7A746C; text-decoration: none; padding: 14px 16px; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
+  .pg-chrome-nav a.active, .pg-chrome-nav a:hover { color: #5E82A0; border-bottom-color: #5E82A0; }
+
+  /* PAGE TITLE BLOCK */
+  .pg-hero-title { margin-left: 28px; position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; }
+  .pg-eyebrow { font-family: var(--sans); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: #5E82A0; margin-bottom: 6px; }
+  .pg-title { font-family: var(--serif); font-style: italic; font-size: 2rem; font-weight: 400; color: var(--ink); line-height: 1.2; margin-bottom: 4px; }
+  .pg-attr { font-family: var(--serif); font-style: italic; font-size: 0.85rem; color: #AAA49C; }
+
+  main { max-width: 720px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+  .section-label { font-family: var(--sans); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: #5E82A0; margin-bottom: 0.5rem; }
+  .section-title { font-family: var(--serif); font-size: 1.7rem; font-weight: 500; color: var(--ink); margin-bottom: 1.5rem; line-height: 1.2; }
+  .divider { border: none; border-top: 0.5px solid var(--border); margin: 3rem 0; }
+
+  /* UNIT TOGGLE */
+  .unit-toggle { display: flex; align-items: center; gap: 8px; margin-bottom: 1.5rem; }
+  .unit-btn { font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; padding: 5px 14px; border-radius: 20px; border: 0.5px solid rgba(28,26,22,0.15); background: transparent; color: var(--ink-soft); cursor: pointer; transition: all 0.15s; }
+  .unit-btn.active { background: #5E82A0; color: #F0EDE7; border-color: #5E82A0; }
+  .unit-label { font-size: 12px; color: var(--ink-soft); margin-right: 4px; }
+
+  .calc-wrap { background: white; border: 0.5px solid rgba(28,26,22,0.1); border-radius: 10px; padding: 2rem; margin-bottom: 1.25rem; }
+  .calc-row { margin-bottom: 1.5rem; }
+  .calc-label { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 8px; display: block; }
+  .slider-row { display: flex; align-items: center; gap: 14px; }
+  input[type=range] { flex: 1; -webkit-appearance: none; height: 3px; background: #E8E2D8; border-radius: 2px; outline: none; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #5E82A0; cursor: pointer; border: 2px solid white; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+  .slider-val { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; color: var(--ink); min-width: 120px; text-align: right; }
+
+  .toggle-wrap { display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; background: var(--cream); border-radius: 8px; border: 0.5px solid var(--border); margin-bottom: 1.5rem; }
+  .toggle { position: relative; width: 42px; height: 23px; flex-shrink: 0; margin-top: 2px; }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .toggle-track { position: absolute; inset: 0; background: #E8E2D8; border: 0.5px solid var(--border); border-radius: 12px; cursor: pointer; transition: background 0.2s; }
+  .toggle input:checked + .toggle-track { background: #5E82A0; border-color: #5E82A0; }
+  .toggle-thumb { position: absolute; top: 3px; left: 3px; width: 17px; height: 17px; background: white; border-radius: 50%; transition: transform 0.2s; pointer-events: none; }
+  .toggle input:checked ~ .toggle-thumb { transform: translateX(19px); }
+  .toggle-title { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 2px; }
+  .toggle-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+
+  .cards-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); margin: 1.5rem 0 8px; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  @media (max-width: 480px) { .cards { grid-template-columns: 1fr 1fr; } }
+  .card { background: var(--cream); border: 0.5px solid rgba(28,26,22,0.1); border-radius: 8px; padding: 14px 16px; }
+  .card-label { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px; }
+  .card-val { font-family: var(--serif); font-size: 1.5rem; font-weight: 500; color: var(--ink); line-height: 1.1; }
+  .card-sub { font-size: 12px; color: var(--ink-soft); margin-top: 3px; }
+  .calc-note { margin-top: 1.25rem; font-size: 13px; color: var(--ink-soft); line-height: 1.6; padding: 10px 14px; border-left: 2px solid rgba(94,130,160,0.3); }
+
+  .prose p { margin-bottom: 1.1rem; color: var(--ink-mid); font-size: 15px; line-height: 1.75; }
+  .prose strong { font-weight: 500; color: var(--ink); }
+  .prose h3 { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; color: var(--ink); margin: 1.75rem 0 0.5rem; }
+
+  .steps { counter-reset: step; list-style: none; }
+  .steps li { counter-increment: step; display: grid; grid-template-columns: 24px 1fr; gap: 0 16px; margin-bottom: 1rem; font-size: 15px; color: var(--ink-mid); line-height: 1.65; }
+  .steps li::before { grid-column: 1; padding-top: 1px; }
+  .steps li > * { grid-column: 2; }
+  .steps li::before { content: counter(step); font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: #5E82A0; }
+
+  .tip-block { background: white; border: 0.5px solid var(--border); border-left: 2px solid #5E82A0; border-radius: 0 6px 6px 0; padding: 12px 16px; margin: 1rem 0; font-size: 13px; color: var(--ink-mid); line-height: 1.6; }
+  .tip-block strong { color: var(--ink); font-weight: 500; }
+
+  /* REGISTRATION NOTE */
+  .reg-note { background: var(--cream-d); border: 0.5px solid var(--border); border-radius: 8px; padding: 14px 18px; margin-bottom: 1.5rem; font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--ink-soft); line-height: 1.65; }
+  .reg-note strong { font-style: normal; font-weight: 500; color: var(--ink-mid); }
+
+  /* INGREDIENTS TABLE */
+  .ing-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; }
+  .ing-table th { font-family: var(--sans); font-size: 10px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-soft); text-align: left; padding: 6px 12px 6px 0; border-bottom: 0.5px solid var(--border); }
+  .ing-table td { font-size: 14px; color: var(--ink-mid); padding: 8px 12px 8px 0; border-bottom: 0.5px solid rgba(28,26,22,0.06); line-height: 1.4; }
+  .ing-table td:last-child { color: var(--ink); font-family: var(--serif); font-size: 15px; font-weight: 500; text-align: right; }
+
+  .storage-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 1rem; }
+  @media (max-width: 480px) { .storage-grid { grid-template-columns: 1fr; } }
+  .storage-card { background: white; border: 0.5px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .storage-card-title { font-family: var(--serif); font-size: 0.95rem; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+  .storage-card ul { list-style: none; padding: 0; }
+  .storage-card ul li { font-size: 13px; color: var(--ink-mid); padding: 3px 0 3px 14px; position: relative; line-height: 1.5; }
+  .storage-card ul li::before { content: '–'; position: absolute; left: 0; color: #5E82A0; }
+
+  /* BACK LINK */
+  .pasta-link { margin-top: 28px; padding-top: 24px; border-top: 0.5px solid rgba(28,26,22,0.12); }
+  .pasta-link p { font-family: var(--serif); font-style: italic; font-size: 1rem; color: #7A746C; margin-bottom: 8px; }
+  .pasta-link a { font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
+  .pasta-link a span { color: #5E82A0; }
+
+  /* FOOTER */
+  .pg-footer { background: #8AAEC8; padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+  .pg-footer-left { font-family: var(--sans); font-size: 12px; color: var(--ink); }
+  .pg-footer-left a { color: var(--ink); text-decoration: none; }
+  .pg-footer-left em { font-family: var(--serif); font-style: italic; font-size: 15px; }
+  .pg-footer-right a { font-size: 11px; color: var(--ink); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="pg-topbar"></div>
+
+<div class="pg-hero">
+  <div class="pg-hero-inner">
+    <a href="https://daveandmike.net"><img src="assets/dnm_logo.svg" alt="dave&amp;mike"></a>
+    <div class="pg-hero-title">
+      <p class="pg-eyebrow">Kitchen</p>
+      <h1 class="pg-title">Tortellini in brodo</h1>
+      <p class="pg-attr">Dotta Confraternita del Tortellino &middot; Registered Bologna, 1974</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg-chrome-bar">
+  <div></div>
+  <nav class="pg-chrome-nav">
+    <a href="#calculator" class="active">Calculator</a>
+    <a href="#filling">Filling</a>
+    <a href="#shaping">Shaping</a>
+    <a href="#broth">Broth</a>
+    <a href="#serving">Serving</a>
+  </nav>
+  <div class="pg-chrome-right">
+    <a href="index.html" class="pg-back">&larr; Kitchen</a>
+  </div>
+</div>
+
+
+<main>
+
+  <!-- ══════════════════════════════════════
+       PAGE INTRO
+  ══════════════════════════════════════ -->
+  <div class="reg-note" style="margin-bottom:2.5rem;">
+    The filling and broth on this page follow the recipe officially registered in Bologna in 1974 &mdash; that part has not been changed. What <em>has</em> been adapted is everything around it: the pasta dough draws from <a href="pasta.html" style="color:var(--ink-mid);">Nonna Maria&rsquo;s fresh egg pasta</a> (enriched with extra yolks), and the broth uses a good homemade stock in place of the traditional farmyard capon. <strong>This page is less about the letter of the law and more about proportioning the ingredients correctly, and the tips, tricks, and methods developed over many batches to help you be successful.</strong> The official recipe sets the standard; what follows helps you meet it.
+  </div>
+
+  <!-- ══════════════════════════════════════
+       CALCULATOR
+  ══════════════════════════════════════ -->
+  <section id="calculator" style="padding-top:1rem;">
+    <p class="section-label">Production planner</p>
+    <h2 class="section-title">How many are you feeding?</h2>
+
+    <div class="unit-toggle">
+      <span class="unit-label">Units:</span>
+      <button class="unit-btn active" id="btn-metric" onclick="setUnit('metric')">Metric (g / ml)</button>
+      <button class="unit-btn" id="btn-imperial" onclick="setUnit('imperial')">Imperial (oz / cups)</button>
+    </div>
+
+    <div class="calc-wrap">
+
+      <div class="calc-row">
+        <span class="calc-label">Guests</span>
+        <div class="slider-row">
+          <input type="range" id="guests" min="1" max="30" value="8" step="1">
+          <span class="slider-val" id="guests-out">8 guests</span>
+        </div>
+      </div>
+
+      <div class="toggle-wrap">
+        <label class="toggle">
+          <input type="checkbox" id="primo" checked>
+          <div class="toggle-track"></div>
+          <div class="toggle-thumb"></div>
+        </label>
+        <div>
+          <div class="toggle-title">Primo &mdash; main course</div>
+          <div class="toggle-desc">Toggle <strong>on</strong> for a primo (main course) portion &mdash; approximately 19 tortellini and 1 cup (240&thinsp;ml) of broth per guest. Toggle <strong>off</strong> for antipasto &mdash; approximately 9 tortellini and &frac12; cup (120&thinsp;ml) of broth.</div>
+        </div>
+      </div>
+
+      <p class="cards-label">Filling ingredients</p>
+      <div class="cards" id="filling-cards"></div>
+
+      <p class="cards-label" style="margin-top:1.25rem;">Output</p>
+      <div class="cards" id="output-cards"></div>
+
+      <p class="calc-note" id="calc-note"></p>
+    </div>
+
+    <p style="font-size:13px; color:var(--ink-soft); line-height:1.6;">
+      Filling quantities scale from the base batch (400&thinsp;g pork loin, 300&thinsp;g prosciutto, 300&thinsp;g mortadella, 450&thinsp;g Parmigiano-Reggiano, 165&thinsp;g eggs &asymp; 3 eggs), which yields approximately 316 tortellini at 5&thinsp;g of filling each. The pork loin weight shown is pre-cooked &mdash; weigh before seasoning and cooking.
+    </p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ══════════════════════════════════════
+       FILLING
+  ══════════════════════════════════════ -->
+  <section id="filling">
+    <p class="section-label">The filling</p>
+    <h2 class="section-title">Il ripieno</h2>
+
+    <div class="reg-note">
+      <strong>Officially registered recipe.</strong> The filling below follows the recipe deposited on December&nbsp;7, 1974, at the Bologna Chamber of Commerce by the Dotta Confraternita del Tortellino in collaboration with the Accademia Italiana della Cucina, and reaffirmed by notarial deed on April&nbsp;15, 2008. Ingredient quantities are in the planner above &mdash; scale using the guest count and course type.
+    </div>
+
+    <div class="prose">
+      <p>This filling rewards patience. The loin seasons over two days, the mixture rests overnight. Do not rush either rest &mdash; the depth of flavor in a properly aged filling is immediately apparent at the table.</p>
+    </div>
+
+    <ol class="steps">
+      <li><div>
+        <strong>Season the loin.</strong> Combine a generous pinch each of salt, freshly cracked black pepper, chopped fresh rosemary, and minced garlic into a coarse paste. Press this mixture firmly onto all sides of the pork loin, coating it well on every surface. Place the seasoned loin in a dish, cover tightly, and refrigerate for <strong>two full days</strong>. The slow rest draws the aromatics into the meat and builds the flavor base of the entire filling.
+      </div></li>
+      <li><div>
+        <strong>Cook the loin.</strong> Remove the loin from the refrigerator and brush away the seasoning paste. In a small saut&eacute; pan, melt a knob of butter over low heat and cook the loin slowly and gently until cooked through &mdash; it should color lightly without browning aggressively. Remove from the heat and allow to cool completely before proceeding. Do not rush this step; processing warm meat will turn the filling greasy.
+      </div></li>
+      <li><div>
+        <strong>Process the filling.</strong> Cut the cooled loin into rough chunks &mdash; large pieces process more evenly and reduce the risk of over-mixing. Add the loin, prosciutto, mortadella, Parmigiano-Reggiano, eggs, and a generous grating of fresh nutmeg to the bowl of a food processor. Process until the mixture is completely smooth and uniform, with no visible chunks remaining. The finished filling should be cohesive, hold its shape cleanly, and have a silky texture.
+      </div></li>
+      <li><div>
+        <strong>Rest the filling.</strong> Transfer immediately to a sealed container and refrigerate at or below 40&deg;F (4&deg;C). Allow the filling to rest for a minimum of <strong>24 hours</strong> before shaping &mdash; up to 72 hours is ideal. The extra time allows the flavors to fully meld, and the result in the finished tortellini is noticeably richer.
+        <div class="tip-block" style="margin-top:10px;">
+          <strong>Freezing option:</strong> If preparing well in advance, the finished filling may be frozen after mixing. Thaw in the refrigerator (never at room temperature) and use within 24 hours of thawing. That said, freezing fully shaped tortellini is strongly preferred &mdash; it protects the texture of both the dough and the filling, and makes portioning effortless. Frozen tortellini go directly from freezer to boiling broth.
+        </div>
+      </div></li>
+    </ol>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ══════════════════════════════════════
+       SHAPING
+  ══════════════════════════════════════ -->
+  <section id="shaping">
+    <p class="section-label">Shaping</p>
+    <h2 class="section-title">Forming the tortellini</h2>
+
+    <div class="prose">
+      <p>For the pasta dough &mdash; flour ratios, egg weights, and kneading method &mdash; see the <a href="pasta.html" style="color:#5E82A0;text-decoration:none;font-weight:500;">Fresh Egg Pasta</a> page. The dough is the same; what changes here is how thin you roll it and how you work.</p>
+      <p>Tortellini are labor-intensive by design. Plan to make them entirely in advance and freeze them &mdash; this is not a last-minute dish, and that is not a compromise. Frozen tortellini cooked directly from the freezer into hot broth are exceptional. The system below is built around that reality: work in small, matched batches of approximately <strong>70&ndash;75&thinsp;g of dough</strong> per round, yielding approximately <strong>24 circles</strong>, matched to 24 pre-portioned filling balls. Filling and circles stay in rhythm, waste is minimal, and the forming goes quickly.</p>
+    </div>
+
+    <div class="tip-block">
+      <strong>The damp towel.</strong> Keep a clean kitchen linen towel on your work surface, moistened very lightly &mdash; barely damp to the touch, not wet. Lay it over the cut circles while you finish rolling the remaining dough. This is one of the most useful tools at the station: it keeps the circles supple and workable without making them soggy. If the towel is too wet, the pasta absorbs the moisture, becomes tacky, and will not seal cleanly. If it is too dry, the circles stiffen and crack at the fold. The right amount of moisture is almost nothing &mdash; wring the towel thoroughly before use.
+    </div>
+
+    <div class="prose" style="margin-top:1.5rem;">
+      <h3>Set up the station</h3>
+      <p>Before rolling any dough, arrange your work surface: a <strong>kitchen scale</strong>, a <strong>wooden cutting board</strong> directly beside it, and the lightly damp linen towel nearby. Having everything in position before you start is what makes the forming go smoothly.</p>
+
+      <h3>Pre-portion the filling first</h3>
+      <p>Portion the filling before touching the pasta machine. Place the first 4&thinsp;g ball on the scale and leave it there. Add a second ball &mdash; the scale now reads 8&thinsp;g. Add a third: 12&thinsp;g. Continue building in this way, one ball at a time, using the running total to confirm each 4&thinsp;g portion, until you have approximately 24 balls. Set them aside in a row on the cutting board or a small tray. Having the filling already portioned means that once the circles are cut you can move directly into forming without stopping to measure &mdash; the most important thing when working with level-7 pasta.</p>
+
+      <h3>Roll, cut, and re-roll</h3>
+      <p>Take approximately <strong>70&ndash;75&thinsp;g of dough</strong> and keep the rest tightly covered. Press the piece flat and feed it progressively through the pasta machine up to <strong>level&nbsp;7</strong>. Lay the sheet on the wooden cutting board and cut circles with a <strong>2&frac34;-inch (7&thinsp;cm) round cutter</strong>, working quickly. Arrange the circles in rows and cover them immediately with the lightly damp towel.</p>
+      <p>Without pausing, gather the scraps into a ball and knead them briefly and firmly back together. Pass through the machine again to level 7, cut more circles, and return them under the towel. For the second round of scraps, if the dough has tightened and feels stiff, add a <strong>drop or two of water</strong> while kneading before re-rolling &mdash; just enough to relax it.</p>
+      <p>Continue &mdash; roll, cut, re-roll &mdash; until virtually all of the original 70&ndash;75&thinsp;g has been used. The goal is to match the circle count to the filling balls: approximately 24 of each, with almost no dough left over.</p>
+
+      <h3>Form the tortellini</h3>
+    </div>
+
+    <ol class="steps">
+      <li><div>
+        <strong>Fill.</strong> Working one circle at a time, lift the towel and take a single circle. Place one pre-portioned 4&thinsp;g ball of filling precisely in the center. Do not overfill &mdash; too much and the tortellino will not close cleanly.
+      </div></li>
+      <li><div>
+        <strong>Seal the half-moon.</strong> Using a fingertip, lightly moisten the entire outer edge of the circle with cold water. Fold the pasta over the filling to form a half-moon, aligning the edges carefully. Press from the center outward to expel any air, then seal the edge firmly. Work gently &mdash; at level-7 thickness, pressing too hard tears the dough.
+      </div></li>
+      <li><div>
+        <strong>Form the ring.</strong> Lightly moisten the curved arc of the half-moon &mdash; the rounded dome of the fold &mdash; with a touch of water. Cradle the half-moon against your index finger with the sealed straight edge facing you and the dome curving away. Draw the two pointed tips toward each other, wrapping the pasta snugly around your finger, and press the tips firmly against the moistened dome. Give the joined tips a gentle tap to lock them in place. Slide the tortellino off your finger.
+      </div></li>
+      <li><div>
+        <strong>Flash freeze.</strong> Place each finished tortellino directly onto a parchment-lined sheet pan without letting them touch. When the batch is complete, transfer the pan to the freezer. Flash-freeze for 1&ndash;2 hours until firm throughout, then transfer to sealed freezer bags or airtight containers. They will keep well for up to 2 months with no noticeable quality loss. Cook directly from frozen &mdash; no thawing needed.
+      </div></li>
+    </ol>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ══════════════════════════════════════
+       BROTH
+  ══════════════════════════════════════ -->
+  <section id="broth">
+    <p class="section-label">The broth</p>
+    <h2 class="section-title">Il brodo</h2>
+
+    <div class="prose">
+      <h3>The official recipe</h3>
+      <p>The 1974 registered recipe is unambiguous: the broth must be prepared exclusively from a <strong>free-range farmyard capon</strong>, to which cuts of beef suitable for broth &mdash; such as brisket &mdash; may be added. No other substitutions are acknowledged. This is the standard against which all other versions are measured.</p>
+
+      <h3>Home method &mdash; roasted bone broth</h3>
+      <p>In practice, an excellent tortellini broth can be built from a rich homemade stock using <strong>roasted chicken carcasses, beef bones, or a combination of both</strong>, cooked with a mixture of fresh and oven-roasted vegetables. The result, once clarified, produces the clear golden broth that makes this dish so visually and gastronomically compelling.</p>
+      <p><strong>Making the stock.</strong> Roast the bones and carcasses in a hot oven until deeply golden. In a large stockpot, combine the roasted bones with cold water, fresh aromatics (onion, carrot, celery), and any additional vegetables &mdash; some roasted alongside the bones for depth, others added fresh. Bring slowly to a bare simmer, skimming foam and impurities from the surface. Cook gently, uncovered, for a minimum of 3 hours &mdash; 4 hours produces a noticeably fuller result. Season with salt only in the final 30 minutes, tasting as you go. Strain carefully and defat thoroughly by chilling overnight and lifting off the solidified fat, or by patient skimming while hot.</p>
+
+      <h3>Clarifying with egg whites &mdash; the raft</h3>
+      <p>A well-defatted, carefully strained stock may be served as-is, but clarification with egg whites produces a beautifully clear, jewel-toned broth befitting a dish of this refinement.</p>
+      <p>Begin with <strong>cold stock</strong> &mdash; warm stock causes the egg whites to set on contact before a raft can form. For every quart (1&thinsp;liter) of stock, lightly whisk <strong>2 to 3 egg whites</strong> until slightly frothy but not stiff, and stir them into the cold stock. Place the pot over medium-low heat and stir gently and continuously as the stock slowly warms. The egg whites will coagulate and rise, collecting impurities and particulates as they ascend.</p>
+      <p>Once a soft raft begins to form on the surface &mdash; typically after 15 to 20 minutes &mdash; <strong>stop stirring immediately</strong>. Reduce the heat to the lowest possible setting. You should see gentle steam and the occasional lazy bubble breaking through the raft; active boiling will destroy it and cloud the broth. Allow the raft to cook undisturbed for 30 to 45 minutes.</p>
+      <p>To extract the clarified stock, use a ladle to carefully create a small opening in the raft and ladle the clear liquid through it, then through a fine-mesh strainer lined with a double layer of cheesecloth or a clean kitchen towel. Do not press or squeeze. Taste and adjust seasoning gently &mdash; the egg whites will have absorbed some salt during clarification.</p>
+      <p>Like the tortellini themselves, the clarified broth is best made well in advance and frozen. Cool it completely, then freeze in portions sized for your typical service &mdash; one or two quarts at a time. A <strong>chamber vacuum sealer</strong> in a plastic bag is ideal: it eliminates air, prevents freezer burn, and allows the bags to lie flat for compact storage. Other methods work fine too &mdash; rigid containers with tight-fitting lids, or heavy-duty zip bags with as much air pressed out as possible. Thaw overnight in the refrigerator and reheat gently; do not boil.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ══════════════════════════════════════
+       SERVING
+  ══════════════════════════════════════ -->
+  <section id="serving">
+    <p class="section-label">Serving</p>
+    <h2 class="section-title">At the table</h2>
+
+    <div class="prose">
+      <p>Use the <strong>production planner</strong> above to calculate quantities. A primo serving is approximately 19 tortellini in 1 cup (240&thinsp;ml) of broth; an antipasto portion is approximately 9 tortellini in &frac12; cup (120&thinsp;ml).</p>
+
+      <h3>Heat the bowls</h3>
+      <p>This step is non-negotiable. Fill your serving bowls with hot water and allow them to sit for several minutes, then empty and dry just before plating. A cold bowl drops the temperature of the broth immediately &mdash; the tortellini begin to swell, the broth loses its shimmer, and the dish loses its character before it reaches the guest.</p>
+
+      <h3>Two pots</h3>
+      <p>Tortellini in brodo is finished in two separate pots. This is the key to serving a clear, pristine broth.</p>
+      <p><strong>Cooking pot.</strong> Bring a generous amount of broth to a rolling boil &mdash; this may be a good store-bought broth, a secondary stock, or any broth you prefer not to sacrifice to the starch and gelatin released by the pasta. Lower to a lively simmer and cook the tortellini until they float and are tender: approximately 3 to 4 minutes for fresh, 4 to 5 minutes for frozen (added directly from the freezer, no thawing).</p>
+      <p><strong>Serving broth.</strong> Heat your clarified homemade broth separately in a clean pot. Never allow it to boil &mdash; boiling clouds the broth and diminishes its depth. Keep it just below a simmer, steaming and fragrant, ready for service.</p>
+
+      <h3>Plating</h3>
+      <p>Using a slotted spoon or spider, transfer the cooked tortellini directly into the pre-heated bowls. Ladle the hot clarified broth over the tortellini at the last moment &mdash; pour gently and deliberately so as not to disturb the arrangement. Offer freshly grated Parmigiano-Reggiano at the table for guests to add to their own taste.</p>
+    </div>
+
+    <hr class="divider" style="margin:2rem 0;">
+
+    <p class="section-label">Production workflow</p>
+    <h2 class="section-title" style="font-size:1.3rem;margin-bottom:1rem;">Day by day</h2>
+
+    <div class="storage-grid">
+      <div class="storage-card">
+        <p class="storage-card-title">Day 1 &mdash; Season &amp; Cook</p>
+        <ul>
+          <li>Coat the loin in seasoning paste, refrigerate — 2-day rest begins now</li>
+          <li>Later: cook the loin in butter, cool completely</li>
+          <li>Process all filling ingredients until smooth</li>
+          <li>Seal and refrigerate at &le;&nbsp;40&deg;F (4&deg;C)</li>
+        </ul>
+      </div>
+      <div class="storage-card">
+        <p class="storage-card-title">Day 2 &mdash; Rest</p>
+        <ul>
+          <li>Filling is resting — minimum 24 hours in progress</li>
+          <li>Good time to make and clarify your broth</li>
+          <li>Broth keeps refrigerated for 3–4 days</li>
+        </ul>
+      </div>
+      <div class="storage-card">
+        <p class="storage-card-title">Day 3 &mdash; Shape</p>
+        <ul>
+          <li>Filling has rested 48 hours — flavors at their best</li>
+          <li>Roll pasta to level 7 and shape tortellini</li>
+          <li>Cook a batch fresh if desired — unbeatable</li>
+          <li>Flash-freeze the rest on a parchment tray</li>
+        </ul>
+      </div>
+      <div class="storage-card">
+        <p class="storage-card-title">Day 4 &mdash; Last window</p>
+        <ul>
+          <li>Final safe day if shaping wasn't completed on Day 3</li>
+          <li>Shape remaining tortellini today</li>
+          <li>Cook or freeze immediately — do not defer</li>
+        </ul>
+      </div>
+      <div class="storage-card">
+        <p class="storage-card-title">Day 5+ &mdash; Frozen batch</p>
+        <ul>
+          <li>Use only frozen tortellini from this point</li>
+          <li>Cook directly from frozen — no thawing needed</li>
+          <li>Add directly to simmering broth, 4–5 minutes</li>
+        </ul>
+      </div>
+      <div class="storage-card">
+        <p class="storage-card-title">Freezing tips</p>
+        <ul>
+          <li>Always freeze shaped tortellini, not raw filling</li>
+          <li>Flash-freeze on a tray 1–2 hours before bagging</li>
+          <li>Keeps well for up to 2 months, no quality loss</li>
+          <li>Label with date and portion count</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="pasta-link">
+    <p>The dough is the same one from the pasta page.</p>
+    <a href="pasta.html"><span>&larr;</span> Fresh egg pasta</a>
+  </div>
+
+</main>
+
+<footer class="pg-footer">
+  <div class="pg-footer-left"><a href="https://daveandmike.net">dave&amp;mike</a> &nbsp;&middot;&nbsp; <em><a href="https://daveandmike.net/index.html">esperienze</a></em> &nbsp;&middot;&nbsp; <a href="index.html">kitchen</a></div>
+  <div class="pg-footer-right"><a href="mailto:services@musel.us">Contact Dave &amp; Mike</a></div>
+</footer>
+
+<script>
+  /* ── Config (mirrors Pasta_Tortellini_Matrix.xlsx → Config sheet) ── */
+  const CFG = {
+    PRIMO_COUNT:   19,    /* tortellini per primo serving   */
+    ANTI_COUNT:     9,    /* tortellini per antipasto        */
+    PRIMO_BROTH:  240,    /* ml per primo serving           */
+    ANTI_BROTH:   120,    /* ml per antipasto serving       */
+    FILL_PER:       5,    /* g filling per tortellino       */
+    BASE_YIELD:   316,    /* tortellini from base batch     */
+    LOIN:         400,    /* g pork loin (raw)              */
+    PROSCIUTTO:   300,    /* g                              */
+    MORTADELLA:   300,    /* g                              */
+    PARM:         450,    /* g                              */
+    EGGS:         165,    /* g  (~3 eggs at 55g avg)        */
+    EGG_AVG:       55,    /* g per egg                      */
+    ML_PER_CUP: 236.6     /* ml per US cup                  */
+  };
+
+  let unit = 'metric';
+
+  function setUnit(u) {
+    unit = u;
+    document.getElementById('btn-metric').className  = 'unit-btn' + (u === 'metric'   ? ' active' : '');
+    document.getElementById('btn-imperial').className = 'unit-btn' + (u === 'imperial' ? ' active' : '');
+    update();
+  }
+
+  function fmtG(g) {
+    return unit === 'imperial'
+      ? (g / 28.3495).toFixed(1) + ' oz'
+      : Math.round(g) + ' g';
+  }
+
+  function fmtMl(ml) {
+    if (unit === 'imperial') {
+      const cups = ml / CFG.ML_PER_CUP;
+      return cups < 2 ? cups.toFixed(1) + ' c' : cups.toFixed(1) + ' c';
+    }
+    return Math.round(ml) + ' ml';
+  }
+
+  function card(label, val, sub) {
+    return `<div class="card"><div class="card-label">${label}</div><div class="card-val">${val}</div><div class="card-sub">${sub}</div></div>`;
+  }
+
+  function update() {
+    const guests  = parseInt(document.getElementById('guests').value);
+    const isPrimo = document.getElementById('primo').checked;
+    document.getElementById('guests-out').textContent = guests + ' guest' + (guests === 1 ? '' : 's');
+
+    const count  = guests * (isPrimo ? CFG.PRIMO_COUNT  : CFG.ANTI_COUNT);
+    const broth  = guests * (isPrimo ? CFG.PRIMO_BROTH  : CFG.ANTI_BROTH);
+    const scale  = count  / CFG.BASE_YIELD;
+
+    const loin   = CFG.LOIN        * scale;
+    const pros   = CFG.PROSCIUTTO  * scale;
+    const mort   = CFG.MORTADELLA  * scale;
+    const parm   = CFG.PARM        * scale;
+    const eggs   = CFG.EGGS        * scale;
+    const approx = (eggs / CFG.EGG_AVG).toFixed(1);
+    const total  = (pros + mort + parm + eggs + (loin * 0.9)) ; /* ~10% cook loss on loin */
+
+    document.getElementById('filling-cards').innerHTML =
+      card('Pork loin',          fmtG(loin),  'pre-cooked weight') +
+      card('Prosciutto crudo',   fmtG(pros),  '') +
+      card('Mortadella',         fmtG(mort),  '') +
+      card('Parmigiano-Reggiano',fmtG(parm),  'finely grated') +
+      card('Eggs',               fmtG(eggs),  '\u2248 ' + approx + ' eggs');
+
+    document.getElementById('output-cards').innerHTML =
+      card('Tortellini',         count,                    (isPrimo ? 'primo' : 'antipasto') + ' &middot; ' + (isPrimo ? CFG.PRIMO_COUNT : CFG.ANTI_COUNT) + '/guest') +
+      card('Total broth',        fmtMl(broth),             (isPrimo ? '1 cup' : '\u00bd cup') + ' per guest') +
+      card('Batches of filling', scale < 1 ? '&lt;&nbsp;1' : (Math.ceil(scale * 10) / 10).toFixed(1), 'base batch = 316 tortellini');
+
+    const course = isPrimo ? 'Primo' : 'Antipasto';
+    const perG   = isPrimo ? CFG.PRIMO_COUNT : CFG.ANTI_COUNT;
+    const brothS = isPrimo ? '1 cup (240\u202fml)' : '\u00bd cup (120\u202fml)';
+    document.getElementById('calc-note').textContent =
+      course + ' serving: ' + perG + ' tortellini and ' + brothS + ' of broth per guest. '
+      + count + ' tortellini total — '
+      + (scale <= 1 ? 'within one base batch of filling.' : 'requires ' + (Math.ceil(scale * 10) / 10).toFixed(1) + '\u00d7 the base batch of filling.');
+  }
+
+  document.getElementById('guests').addEventListener('input', update);
+  document.getElementById('primo').addEventListener('change', update);
+  update();
+</script>
+</body>
+</html>
