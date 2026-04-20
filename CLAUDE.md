@@ -19,6 +19,28 @@ See ~/Documents/Git/CLAUDE.md for the full dave&mike visual system.
 - Title is inside `.pg-hero-inner` with `.pg-hero-title` class
 - Has a sticky `.chrome-bar` below the hero for navigation
 
+## bakers-percentage.html — same pattern as pasta.html
+- Nav sections: Calculator · Instructions · Bake Log
+- Hero image: `assets/bakers-percentage-header.jpg` (separate from kitchen_header.png — drop file in assets when ready)
+- Vertical crop adjusted via `background-position` second value in `.pg-hero` rule
+- Baker's Percentage link is now active in index.html (was "coming soon")
+
+### Calculator logic
+- Inputs: date, bread name, preferment method, total flour (g), flour type, hydration % (55–90), salt % (1.5–3.0), yeast type, preferment % (10–50, visible only when preferment ≠ None)
+- Preferment reference data (hydration, yeast %, salt %) is embedded in the JS `PREF_DATA` object — sourced from `BakersPercentages.xlsm` (in daveandmike.net Project folder, not in this repo)
+- Total yeast defaults: Instant 1%, Active Dry 1.5%, Fresh 3%, None (Levain) 0% — sourced from workbook
+- Outputs: single card group when no preferment; two side-by-side groups (Preferment / Final Mix) + slate summary row when preferment selected
+- Salt card in preferment group: only visible for Pâte Fermentée
+
+### Bake Log
+- Stored in `localStorage` key: `bakers_bake_log`
+- Export to Excel via SheetJS (cdnjs) — columns match `BakersPercentages.xlsm` BakeLog sheet structure
+
+### Instructions
+- Content is dynamic — updates when preferment dropdown changes
+- All instruction text is embedded in JS `INSTRUCTIONS` object, sourced from the workbook's Instructions sheet
+- Methods covered: None (general), Poolish, Biga, Pâte Fermentée, Levain, Sponge
+
 ## tortellini.html — same pattern as pasta.html
 - Nav sections: Calculator | Filling | Shaping | Broth | Serving
 - Same `.pg-hero`, `.pg-chrome-bar`, `.calc-wrap`, `.cards`, `.steps`, `.storage-grid` components as pasta.html
