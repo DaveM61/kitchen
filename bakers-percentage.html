@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baker's Percentage — dave&amp;mike · Kitchen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #F0EDE7; --cream-d: #E8E2D8; --ink: #1C1A16; --ink-mid: #4A4640;
+    --ink-soft: #7A746C; --slate: #5E82A0;
+    --border: rgba(28,26,22,0.12); --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+  html { scroll-behavior: smooth; scroll-padding-top: 52px; }
+  body { background: var(--cream); color: var(--ink); font-family: var(--sans); font-weight: 300; line-height: 1.7; font-size: 16px; }
+
+  .pg-topbar { height: 12px; background: #5E82A0; }
+
+  .pg-hero {
+    background: url(assets/bakers-percentage-header.jpg) center 25% / cover no-repeat;
+    position: relative;
+  }
+  .pg-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, #F0EDE7 0%, #F0EDE7 25%, rgba(240,237,231,0.6) 42%, transparent 58%);
+  }
+  .pg-hero-inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 12px 36px;
+    z-index: 1;
+  }
+  .pg-hero-inner > a img { display: block; width: 100px; flex-shrink: 0; }
+  .pg-hero-title { margin-left: 28px; position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; }
+  .pg-eyebrow { font-family: var(--sans); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: #5E82A0; margin-bottom: 6px; }
+  .pg-title { font-family: var(--serif); font-style: italic; font-size: 2rem; font-weight: 400; color: var(--ink); line-height: 1.2; margin-bottom: 4px; }
+  .pg-attr { font-family: var(--serif); font-style: italic; font-size: 0.85rem; color: #AAA49C; }
+
+  .pg-chrome-bar { background: var(--cream); border-bottom: 0.5px solid rgba(28,26,22,0.1); padding: 0 32px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; position: sticky; top: 0; z-index: 100; }
+  .pg-chrome-right { display: flex; justify-content: flex-end; }
+  .pg-back { font-family: var(--sans); font-size: 12px; color: #5E82A0; text-decoration: none; padding: 14px 0; }
+  .pg-chrome-nav { display: flex; }
+  .pg-chrome-nav a { font-family: var(--sans); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #7A746C; text-decoration: none; padding: 14px 20px; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
+  .pg-chrome-nav a.active, .pg-chrome-nav a:hover { color: #5E82A0; border-bottom-color: #5E82A0; }
+
+  main { max-width: 720px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+  .section-label { font-family: var(--sans); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: #5E82A0; margin-bottom: 0.5rem; }
+  .section-title { font-family: var(--serif); font-size: 1.7rem; font-weight: 500; color: var(--ink); margin-bottom: 1.5rem; line-height: 1.2; }
+  .divider { border: none; border-top: 0.5px solid var(--border); margin: 3rem 0; }
+
+  /* UNIT TOGGLE */
+  .unit-toggle { display: flex; align-items: center; gap: 8px; margin-bottom: 1.5rem; }
+  .unit-btn { font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; padding: 5px 14px; border-radius: 20px; border: 0.5px solid rgba(28,26,22,0.15); background: transparent; color: var(--ink-soft); cursor: pointer; transition: all 0.15s; }
+  .unit-btn.active { background: #5E82A0; color: #F0EDE7; border-color: #5E82A0; }
+  .unit-label { font-size: 12px; color: var(--ink-soft); margin-right: 4px; }
+
+  /* CALC INPUTS */
+  .calc-wrap { background: white; border: 0.5px solid rgba(28,26,22,0.1); border-radius: 10px; padding: 2rem; margin-bottom: 1.25rem; }
+  .calc-row { margin-bottom: 1.5rem; }
+  .calc-row:last-child { margin-bottom: 0; }
+  .calc-label { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 8px; display: block; }
+  .slider-row { display: flex; align-items: center; gap: 14px; }
+  input[type=range] { flex: 1; -webkit-appearance: none; height: 3px; background: #E8E2D8; border-radius: 2px; outline: none; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #5E82A0; cursor: pointer; border: 2px solid white; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+  .slider-val { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; color: var(--ink); min-width: 72px; text-align: right; }
+  .calc-input { width: 100%; font-family: var(--sans); font-size: 14px; font-weight: 300; color: var(--ink); background: var(--cream); border: 0.5px solid rgba(28,26,22,0.18); border-radius: 6px; padding: 8px 12px; outline: none; transition: border-color 0.15s; -moz-appearance: textfield; }
+  .calc-input:focus { border-color: #5E82A0; }
+  .calc-input::-webkit-outer-spin-button, .calc-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+  select.calc-input { cursor: pointer; }
+
+  /* OUTPUT CARDS */
+  .cards-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); margin: 1.5rem 0 8px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
+  .card { background: var(--cream); border: 0.5px solid rgba(28,26,22,0.1); border-radius: 8px; padding: 14px 16px; }
+  .card-label { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px; }
+  .card-val { font-family: var(--serif); font-size: 1.5rem; font-weight: 500; color: var(--ink); line-height: 1.1; }
+  .card-sub { font-size: 12px; color: var(--ink-soft); margin-top: 3px; }
+
+  /* PREFERMENT OUTPUT — 2 COLUMNS */
+  .output-groups { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 1.5rem; }
+  @media (max-width: 520px) { .output-groups { grid-template-columns: 1fr; } }
+  .output-group { background: var(--cream); border: 0.5px solid rgba(28,26,22,0.12); border-radius: 8px; padding: 14px; }
+  .output-group-label { font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--slate); margin-bottom: 10px; padding-bottom: 8px; border-bottom: 0.5px solid rgba(28,26,22,0.1); }
+  .output-group .card { background: white; margin-bottom: 8px; }
+  .output-group .card:last-child { margin-bottom: 0; }
+
+  .summary-row { margin-top: 16px; background: #5E82A0; border-radius: 8px; padding: 14px 20px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  @media (max-width: 520px) { .summary-row { grid-template-columns: 1fr 1fr; } }
+  .sum-item-label { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(240,237,231,0.6); margin-bottom: 4px; }
+  .sum-item-val { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; color: white; }
+
+  /* ADVISORY */
+  .advisory { margin-top: 1.25rem; background: white; border: 0.5px solid var(--border); border-radius: 8px; padding: 16px 20px; }
+  .advisory-title { font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 10px; }
+  .advisory ul { list-style: none; }
+  .advisory ul li { font-size: 13px; color: var(--ink-mid); padding: 3px 0 3px 16px; position: relative; line-height: 1.55; }
+  .advisory ul li::before { content: '·'; position: absolute; left: 0; color: #5E82A0; font-weight: 700; }
+
+  /* SAVE THIS BAKE */
+  .save-trigger-row { margin-top: 1.5rem; padding-top: 1.25rem; border-top: 0.5px solid rgba(28,26,22,0.1); }
+  .save-trigger-btn { font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; background: #5E82A0; color: white; border: none; border-radius: 6px; padding: 10px 20px; cursor: pointer; transition: background 0.15s; }
+  .save-trigger-btn:hover { background: #4a6882; }
+  .save-form { display: none; margin-top: 1.25rem; background: white; border: 0.5px solid var(--border); border-radius: 10px; padding: 1.5rem; }
+  .save-form.open { display: block; }
+  .save-form-title { font-family: var(--serif); font-style: italic; font-size: 1.3rem; color: var(--ink); margin-bottom: 1.25rem; }
+  .save-section-hdr { font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--slate); margin: 1.25rem 0 0.75rem; padding-top: 1rem; border-top: 0.5px solid rgba(28,26,22,0.1); }
+  .save-section-hdr:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+  .save-field { margin-bottom: 1rem; }
+  .save-field label { display: block; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px; }
+  .save-readonly { font-family: var(--serif); font-size: 1.05rem; color: var(--ink); }
+  .save-mini-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-bottom: 1rem; }
+  .save-mini { background: var(--cream); border: 0.5px solid var(--border); border-radius: 6px; padding: 10px 12px; }
+  .save-mini-label { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 3px; }
+  .save-mini-val { font-family: var(--serif); font-size: 1.1rem; color: var(--ink); }
+
+  /* KEEPER */
+  .keeper-row { display: flex; align-items: center; gap: 12px; }
+  .keeper-btn { font-size: 2rem; cursor: pointer; color: #E8E2D8; transition: color 0.15s; background: none; border: none; padding: 0; line-height: 1; }
+  .keeper-btn.active { color: #D4A847; }
+  .keeper-hint { font-size: 13px; color: var(--ink-soft); }
+
+  /* STAR RATINGS */
+  .star-row { display: flex; gap: 6px; margin-bottom: 8px; }
+  .star-btn { font-size: 1.6rem; cursor: pointer; color: #E8E2D8; background: none; border: none; padding: 0; line-height: 1; transition: color 0.1s; }
+  .star-btn.active { color: #5E82A0; }
+  textarea.calc-input { resize: vertical; min-height: 80px; }
+  .save-btn { font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; background: var(--ink); color: white; border: none; border-radius: 6px; padding: 10px 24px; cursor: pointer; margin-top: 1rem; transition: background 0.15s; }
+  .save-btn:hover { background: #333; }
+  .save-success { font-size: 13px; color: #5E82A0; margin-top: 0.75rem; display: none; }
+
+  /* INSTRUCTIONS */
+  .instr-method-label { font-family: var(--serif); font-style: italic; font-size: 1.1rem; color: var(--ink-soft); margin-bottom: 1.5rem; }
+  .steps { counter-reset: step; list-style: none; }
+  .steps li { counter-increment: step; display: grid; grid-template-columns: 24px 1fr; gap: 0 16px; margin-bottom: 1rem; font-size: 15px; color: var(--ink-mid); line-height: 1.65; }
+  .steps li::before { content: counter(step); font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: #5E82A0; padding-top: 1px; }
+  .tip-block { background: white; border: 0.5px solid var(--border); border-left: 2px solid #5E82A0; border-radius: 0 6px 6px 0; padding: 12px 16px; margin: 0.4rem 0; font-size: 13px; color: var(--ink-mid); line-height: 1.6; }
+  .instr-sub { font-family: var(--sans); font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--slate); margin: 1.75rem 0 0.75rem; }
+  .instr-notes { list-style: none; }
+  .instr-notes li { font-size: 14px; color: var(--ink-mid); padding: 4px 0 4px 18px; position: relative; line-height: 1.6; }
+  .instr-notes li::before { content: '–'; position: absolute; left: 0; color: #5E82A0; }
+
+  /* BAKE LOG */
+  .log-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 8px; }
+  .export-btn { font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; background: white; color: var(--ink); border: 0.5px solid rgba(28,26,22,0.2); border-radius: 6px; padding: 8px 16px; cursor: pointer; transition: all 0.15s; }
+  .export-btn:hover { border-color: #5E82A0; color: #5E82A0; }
+  .log-empty { font-family: var(--serif); font-style: italic; font-size: 1rem; color: var(--ink-soft); padding: 2.5rem 0; text-align: center; }
+  .log-scroll { overflow-x: auto; }
+  .log-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 640px; }
+  .log-table th { font-family: var(--sans); font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); text-align: left; padding: 8px 10px; border-bottom: 0.5px solid rgba(28,26,22,0.15); white-space: nowrap; }
+  .log-table td { padding: 10px 10px; border-bottom: 0.5px solid rgba(28,26,22,0.08); color: var(--ink-mid); vertical-align: top; }
+  .log-table tr.data-row { cursor: pointer; transition: background 0.1s; }
+  .log-table tr.data-row:hover { background: white; }
+  .log-keeper { color: #D4A847; }
+  .detail-cell { background: white; }
+  .detail-inner { padding: 16px 12px; }
+  .detail-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-bottom: 12px; }
+  .detail-lbl { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 3px; }
+  .detail-val { font-size: 14px; color: var(--ink); }
+  .detail-obs { font-size: 13px; color: var(--ink-mid); line-height: 1.6; margin-top: 8px; padding-top: 8px; border-top: 0.5px solid rgba(28,26,22,0.1); }
+
+  /* FOOTER */
+  .pg-footer { background: #8AAEC8; padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+  .pg-footer-left { font-family: var(--sans); font-size: 12px; color: var(--ink); }
+  .pg-footer-left a { color: var(--ink); text-decoration: none; }
+  .pg-footer-left em { font-family: var(--serif); font-style: italic; font-size: 15px; }
+  .pg-footer-right a { font-size: 11px; color: var(--ink); text-decoration: none; }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="pg-topbar"></div>
+
+<div class="pg-hero">
+  <div class="pg-hero-inner">
+    <a href="https://daveandmike.net"><img src="assets/dnm_logo.svg" alt="dave&amp;mike"></a>
+    <div class="pg-hero-title">
+      <p class="pg-eyebrow">Kitchen</p>
+      <h1 class="pg-title">Baker&rsquo;s Percentage</h1>
+      <p class="pg-attr">Calculator &middot; Instructions &middot; Bake Log</p>
+    </div>
+  </div>
+</div>
+
+<div class="pg-chrome-bar">
+  <div></div>
+  <nav class="pg-chrome-nav">
+    <a href="#calculator" class="active" id="nav-calc">Calculator</a>
+    <a href="#instructions" id="nav-instr">Instructions</a>
+    <a href="#bake-log" id="nav-log">Bake Log</a>
+  </nav>
+  <div class="pg-chrome-right">
+    <a href="index.html" class="pg-back">&larr; Kitchen</a>
+  </div>
+</div>
+
+<main>
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 1 — CALCULATOR
+  ═══════════════════════════════════════════════ -->
+  <section id="calculator" style="padding-top:1rem;">
+    <p class="section-label">What is Baker&rsquo;s Percentage?</p>
+    <h2 class="section-title">Baker&rsquo;s percentages</h2>
+    <p style="font-size:15px; font-weight:300; color:var(--ink-mid); line-height:1.75; margin-bottom:2.5rem;">Baker&rsquo;s percentage is the way professional bakers write recipes &mdash; every ingredient is expressed as a percentage of the total flour weight, not as a fixed amount. That means the same recipe scales perfectly whether you&rsquo;re making one small loaf or ten. Flour is always 100%, and everything else &mdash; water, salt, yeast &mdash; is calculated relative to it. A 72% hydration dough simply means 72g of water for every 100g of flour. Once you think this way, you stop following recipes and start understanding bread. Use this calculator by entering your total flour weight and adjusting the ratios to suit your flour, your yeast, and how you want the dough to behave. The calculator does the math; you do the baking.</p>
+
+    <p class="section-label">Ingredient calculator</p>
+
+    <div class="unit-toggle">
+      <span class="unit-label">Units:</span>
+      <button class="unit-btn active" id="btn-metric" onclick="setUnit('metric')">Metric (g)</button>
+      <button class="unit-btn" id="btn-imperial" onclick="setUnit('imperial')">Imperial (oz)</button>
+    </div>
+
+    <div class="calc-wrap">
+
+      <div class="calc-row">
+        <label class="calc-label" for="bakeDate">Date</label>
+        <input type="date" id="bakeDate" class="calc-input">
+      </div>
+
+      <div class="calc-row">
+        <label class="calc-label" for="breadName">Bread name</label>
+        <input type="text" id="breadName" class="calc-input" placeholder="e.g. Rustic Italian Crusty Bread">
+      </div>
+
+      <div class="calc-row">
+        <label class="calc-label" for="prefermentMethod">Preferment method</label>
+        <select id="prefermentMethod" class="calc-input" onchange="recalculate(); renderInstructions();">
+          <option value="None">None</option>
+          <option value="Poolish">Poolish</option>
+          <option value="Biga">Biga</option>
+          <option value="Pâte Fermentée">Pâte Fermentée</option>
+          <option value="Levain">Levain</option>
+          <option value="Sponge">Sponge</option>
+        </select>
+      </div>
+
+      <div class="calc-row">
+        <label class="calc-label" for="totalFlour">Total flour (g)</label>
+        <input type="number" id="totalFlour" class="calc-input" placeholder="e.g. 500" min="0" oninput="recalculate()">
+      </div>
+
+      <div class="calc-row">
+        <label class="calc-label" for="flourType">Flour type</label>
+        <input type="text" id="flourType" class="calc-input" placeholder="e.g. Bread Flour, 00 All Purpose – Molino">
+      </div>
+
+      <div class="calc-row">
+        <label class="calc-label">Hydration — <span id="hydration-val">72%</span></label>
+        <div class="slider-row">
+          <input type="range" id="hydration" min="55" max="90" value="72" step="1" oninput="recalculate()">
+          <span class="slider-val" id="hydration-display">72%</span>
+        </div>
+      </div>
+
+      <div class="calc-row">
+        <label class="calc-label">Salt — <span id="saltPct-val">2.0%</span></label>
+        <div class="slider-row">
+          <input type="range" id="saltPct" min="1.5" max="3.0" value="2.0" step="0.1" oninput="recalculate()">
+          <span class="slider-val" id="saltPct-display">2.0%</span>
+        </div>
+      </div>
+
+      <div class="calc-row">
+        <label class="calc-label" for="yeastType">Yeast type</label>
+        <select id="yeastType" class="calc-input" onchange="recalculate()">
+          <option value="Instant">Instant</option>
+          <option value="Active Dry">Active Dry</option>
+          <option value="Fresh">Fresh</option>
+          <option value="None (Levain)">None (Levain)</option>
+        </select>
+      </div>
+
+      <div class="calc-row hidden" id="prefermentPct-row">
+        <label class="calc-label">Preferment — <span id="prefermentPct-val">20%</span> of flour</label>
+        <div class="slider-row">
+          <input type="range" id="prefermentPct" min="10" max="50" value="20" step="5" oninput="recalculate()">
+          <span class="slider-val" id="prefermentPct-display">20%</span>
+        </div>
+      </div>
+
+    </div><!-- /calc-wrap -->
+
+    <!-- OUTPUT: No preferment -->
+    <div id="output-simple">
+      <p class="cards-label">Ingredients</p>
+      <div class="cards">
+        <div class="card" id="out-flour">
+          <div class="card-label">Flour</div>
+          <div class="card-val">–</div>
+          <div class="card-sub">baker's 100%</div>
+        </div>
+        <div class="card" id="out-water">
+          <div class="card-label">Water</div>
+          <div class="card-val">–</div>
+          <div class="card-sub">hydration</div>
+        </div>
+        <div class="card" id="out-salt">
+          <div class="card-label">Salt</div>
+          <div class="card-val">–</div>
+          <div class="card-sub">of flour</div>
+        </div>
+        <div class="card" id="out-yeast">
+          <div class="card-label">Yeast</div>
+          <div class="card-val">–</div>
+          <div class="card-sub">of flour</div>
+        </div>
+        <div class="card" id="out-total">
+          <div class="card-label">Total dough</div>
+          <div class="card-val">–</div>
+          <div class="card-sub">total weight</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OUTPUT: With preferment -->
+    <div id="output-preferment" class="hidden">
+      <div class="output-groups">
+        <div class="output-group">
+          <div class="output-group-label" id="pref-group-label">Preferment</div>
+          <div class="card" id="pref-flour"><div class="card-label">Flour</div><div class="card-val">–</div><div class="card-sub"></div></div>
+          <div class="card" id="pref-water"><div class="card-label">Water</div><div class="card-val">–</div><div class="card-sub"></div></div>
+          <div class="card" id="pref-yeast"><div class="card-label">Yeast</div><div class="card-val">–</div><div class="card-sub"></div></div>
+          <div class="card" id="pref-salt"><div class="card-label">Salt</div><div class="card-val">–</div><div class="card-sub"></div></div>
+          <div class="card" id="pref-total"><div class="card-label">Total</div><div class="card-val">–</div><div class="card-sub"></div></div>
+        </div>
+        <div class="output-group">
+          <div class="output-group-label">Final Mix (bake day)</div>
+          <div class="card" id="final-flour"><div class="card-label">Flour to add</div><div class="card-val">–</div><div class="card-sub"></div></div>
+          <div class="card" id="final-water"><div class="card-label">Water to add</div><div class="card-val">–</div><div class="card-sub"></div></div>
+          <div class="card" id="final-salt"><div class="card-label">Salt to add</div><div class="card-val">–</div><div class="card-sub"></div></div>
+          <div class="card" id="final-yeast"><div class="card-label">Yeast to add</div><div class="card-val">–</div><div class="card-sub"></div></div>
+          <div class="card" id="final-total"><div class="card-label">Final dough</div><div class="card-val">–</div><div class="card-sub"></div></div>
+        </div>
+      </div>
+      <div class="summary-row">
+        <div><div class="sum-item-label">Total flour</div><div class="sum-item-val" id="sum-flour">–</div></div>
+        <div><div class="sum-item-label">Total water</div><div class="sum-item-val" id="sum-water">–</div></div>
+        <div><div class="sum-item-label">Total salt</div><div class="sum-item-val" id="sum-salt">–</div></div>
+        <div><div class="sum-item-label">Dough weight</div><div class="sum-item-val" id="sum-total">–</div></div>
+      </div>
+    </div>
+
+    <!-- ADVISORY NOTES -->
+    <div class="advisory">
+      <div class="advisory-title">Yeast &amp; fermentation notes</div>
+      <ul>
+        <li>Higher hydration = dough ferments faster &rarr; reduce yeast slightly</li>
+        <li>Lower hydration (stiff dough) = slower fermentation &rarr; increase yeast slightly</li>
+        <li>Warm room &rarr; reduce yeast &nbsp;&middot;&nbsp; Cold room &rarr; increase yeast</li>
+        <li>Salt slows fermentation: more = slower, less = faster</li>
+        <li>Baker&rsquo;s Percentage range: 1.8%&ndash;2.2% &nbsp;&middot;&nbsp; Standard: 1.5%&ndash;2.5% &nbsp;&middot;&nbsp; Default: 2%</li>
+      </ul>
+    </div>
+
+    <!-- SAVE THIS BAKE -->
+    <div class="save-trigger-row">
+      <button class="save-trigger-btn" id="save-trigger-btn" onclick="toggleSaveForm()">Save This Bake &darr;</button>
+    </div>
+
+    <div class="save-form" id="save-form">
+      <div class="save-form-title">Record this bake</div>
+
+      <div class="save-section-hdr">From your inputs</div>
+      <div class="save-field"><label>Date</label><div class="save-readonly" id="sf-date">–</div></div>
+      <div class="save-field"><label>Bread</label><div class="save-readonly" id="sf-name">–</div></div>
+      <div class="save-field"><label>Flour type</label><div class="save-readonly" id="sf-flour-type">–</div></div>
+
+      <div class="save-section-hdr">Calculated values</div>
+      <div class="save-mini-grid" id="sf-calc-grid"><!-- populated by JS --></div>
+
+      <div class="save-section-hdr">Post-bake</div>
+      <div class="save-field">
+        <label>Keeper?</label>
+        <div class="keeper-row">
+          <button class="keeper-btn" id="keeper-btn" onclick="toggleKeeper()" title="Mark as keeper">&#9733;</button>
+          <span class="keeper-hint" id="keeper-hint">Tap to mark as a keeper</span>
+        </div>
+      </div>
+      <div class="save-field">
+        <label for="sf-finish-wt">Finished loaf weight (g)</label>
+        <input type="number" id="sf-finish-wt" class="calc-input" placeholder="e.g. 780">
+      </div>
+      <div class="save-field">
+        <label>Crust</label>
+        <div class="star-row" id="crust-stars">
+          <button class="star-btn" onclick="setRating('crust',1)">&#9733;</button>
+          <button class="star-btn" onclick="setRating('crust',2)">&#9733;</button>
+          <button class="star-btn" onclick="setRating('crust',3)">&#9733;</button>
+          <button class="star-btn" onclick="setRating('crust',4)">&#9733;</button>
+          <button class="star-btn" onclick="setRating('crust',5)">&#9733;</button>
+        </div>
+        <input type="text" id="crust-note" class="calc-input" placeholder="Short note on crust">
+      </div>
+      <div class="save-field">
+        <label>Crumb</label>
+        <div class="star-row" id="crumb-stars">
+          <button class="star-btn" onclick="setRating('crumb',1)">&#9733;</button>
+          <button class="star-btn" onclick="setRating('crumb',2)">&#9733;</button>
+          <button class="star-btn" onclick="setRating('crumb',3)">&#9733;</button>
+          <button class="star-btn" onclick="setRating('crumb',4)">&#9733;</button>
+          <button class="star-btn" onclick="setRating('crumb',5)">&#9733;</button>
+        </div>
+        <input type="text" id="crumb-note" class="calc-input" placeholder="Short note on crumb">
+      </div>
+      <div class="save-field">
+        <label for="sf-observations">Observations</label>
+        <textarea id="sf-observations" class="calc-input" placeholder="What worked, what didn't, what to try next time…"></textarea>
+      </div>
+      <div class="save-field">
+        <label for="sf-notes">Notes</label>
+        <textarea id="sf-notes" class="calc-input" placeholder="Any additional notes…"></textarea>
+      </div>
+
+      <button class="save-btn" onclick="saveBake()">Save to Bake Log</button>
+      <div class="save-success" id="save-success">&#10003; Saved — check the Bake Log tab.</div>
+    </div>
+
+  </section>
+
+  <hr class="divider">
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 2 — INSTRUCTIONS
+  ═══════════════════════════════════════════════ -->
+  <section id="instructions">
+    <p class="section-label">Method instructions</p>
+    <h2 class="section-title">How to bake it</h2>
+    <div id="instr-content"><!-- rendered by renderInstructions() --></div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 3 — BAKE LOG
+  ═══════════════════════════════════════════════ -->
+  <section id="bake-log">
+    <p class="section-label">Your bake log</p>
+    <h2 class="section-title">Saved bakes</h2>
+    <div class="log-controls">
+      <span style="font-size:13px;color:var(--ink-soft);" id="log-count">–</span>
+      <button class="export-btn" onclick="exportLog()">Export to Excel &darr;</button>
+    </div>
+    <div id="log-container"><!-- rendered by renderLog() --></div>
+  </section>
+
+</main>
+
+<footer class="pg-footer">
+  <div class="pg-footer-left">
+    <a href="https://daveandmike.net">dave&amp;mike</a> &nbsp;&middot;&nbsp;
+    <em><a href="https://daveandmike.net/index.html">esperienze</a></em> &nbsp;&middot;&nbsp;
+    <a href="index.html">kitchen</a>
+  </div>
+  <div class="pg-footer-right"><a href="mailto:services@musel.us">Contact Dave &amp; Mike</a></div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+// ─────────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────────
+const PREF_DATA = {
+  'Poolish':        { hydration: 1.00, instant: 0.001,  activeDry: 0.002,  fresh: 0.0035, salt: 0    },
+  'Biga':           { hydration: 0.50, instant: 0.001,  activeDry: 0.0015, fresh: 0.003,  salt: 0    },
+  'Pâte Fermentée': { hydration: 0.65, instant: 0,      activeDry: 0,      fresh: 0,      salt: 0.02 },
+  'Levain':         { hydration: 1.00, instant: 0,      activeDry: 0,      fresh: 0,      salt: 0    },
+  'Sponge':         { hydration: 0.70, instant: 0.01,   activeDry: 0,      fresh: 0,      salt: 0    },
+};
+
+const YEAST_PCT = { 'Instant': 0.01, 'Active Dry': 0.015, 'Fresh': 0.03, 'None (Levain)': 0 };
+
+const INSTRUCTIONS = {
+  'None': {
+    steps: [
+      'Combine flour and water. Mix briefly, then let autolyse for 20–30 minutes — this rests the dough and begins gluten development without kneading.',
+      'Add salt and yeast. Knead by hand 8–10 minutes, or 5–6 minutes in a stand mixer, until smooth and elastic.',
+      'Bulk ferment, covered, at room temperature for 1–2 hours. Perform 3–4 stretch-and-folds during the first hour.',
+      'Shape into a boule or batard. Rest 15 minutes (bench rest), then do a final shape and place seam-side up in a floured banneton.',
+      'Final proof: 1–2 hours at room temperature, or cover and refrigerate overnight for enhanced flavor.',
+      'Preheat oven and baking vessel to 450°F for at least 30 minutes. Score the loaf and bake covered for 20–25 min, then uncovered 15–20 min until deep golden and internal temperature reaches 200–210°F.',
+      'Cool on a wire rack for at least 1 hour before slicing.',
+    ]
+  },
+  'Poolish': {
+    steps: [
+      'Mix flour, water, and yeast until smooth (batter-like consistency). Cover and ferment at room temperature 68–72°F for 8–12 hours, until bubbly and doubled.',
+      'Combine ripe poolish, flour, warm water, yeast, and salt. Mix until no dry flour remains. Let autolyse for 20–30 min.',
+      'Knead briefly (3–5 min by hand or 5 minutes in a stand mixer). Cover and ferment for 2–3 hours at room temperature, performing 3–4 stretch-and-folds every 30 minutes.',
+      'Turn dough onto lightly floured surface. Shape into a round or batard. Let rest 15 min (bench rest).',
+      'Place shaped dough in floured banneton, seam-side up. Cover and proof 1–1½ hours, or refrigerate overnight for better flavor.',
+      'Preheat oven to 450°F with Dutch oven inside. Score dough, transfer to Dutch oven, and bake covered for 25 min. Uncover and bake 15–20 min more until deep golden brown.',
+    ],
+    safety: ['Use oven mitts when handling the hot Dutch oven. Ensure internal loaf temperature reaches 200–210°F.'],
+    substitution: ['All-purpose flour can replace bread flour. For sourdough-style flavor, replace commercial yeast in the poolish with 25g active starter.'],
+    storage: ['Cool completely before storing. Keep in a paper bag at room temperature up to 3 days. Freeze for longer storage.'],
+    tips: [
+      'Poolish is ready when domed, bubbly, and just beginning to collapse.',
+      'A cooler fermentation (e.g., overnight in fridge after 4 hours at room temp) deepens flavor.',
+      'For a crisp crust, bake in a preheated Dutch oven to trap steam.',
+    ],
+  },
+  'Biga': {
+    steps: [
+      'Mix the water, a pinch of yeast, and flour until no dry flour remains. Cover the bowl and ferment at room temperature (73–77°F) for 10–12 hours, until tripled in size.',
+      'In a separate bowl, mix the remaining water and yeast for the main dough. Let hydrate for a few minutes.',
+      'Add the salt to the hydrated yeast mixture and mix to dissolve. Then add the remaining flour and mix until no dry flour remains.',
+      'Knead the dough 2 min to combine, add the mature biga and knead for an additional 5 min until gluten development is sufficient. Dough temperature should be 73–77°F.',
+      'Cover the dough and let ferment for 45 minutes. Perform a fold, then ferment for another 45 minutes.',
+      'Lightly preshape the dough into a ball and rest for 15–20 minutes.',
+      'Shape the dough into a loaf. Preheat your oven and baking vessel to 430°F (fan off).',
+      'Final proof for 35–45 minutes, or until almost doubled in size.',
+      'Score the top of the loaf and bake with the lid on for 20 min. Remove the lid and bake another 15–20 min until the crust is deep golden brown and the internal temperature reaches 200–210°F.',
+      'Remove from the oven and cool completely on a wire rack before slicing.',
+    ],
+    safety: ['Preheat oven at least 30 minutes before baking. Always check internal temperature with a digital thermometer to ensure bread is fully baked.'],
+    substitution: ["If you don't have a cast iron pot, bake the bread on a tray for about 35 min. To create steam, place a preheated cake pan with a few ice cubes in the oven during the first 10 min of baking."],
+    storage: ['Store cooled bread in a paper bag at room temperature for up to 3 days. For longer storage, wrap tightly and freeze for up to 3 months. Reheat in a 350°F oven for 10 min to restore crispness.'],
+    tips: [
+      'The biga should be domed and just beginning to recede in the center when ready — indicating proper fermentation.',
+      'Use a stiff biga (low hydration) to strengthen the dough and improve structure.',
+      'Adjust proofing time based on dough temperature — warmer dough proofs faster.',
+    ],
+  },
+  'Pâte Fermentée': {
+    steps: [
+      'Mix flour, water, a pinch of yeast, and salt into a small dough. Ferment at room temperature for 2–3 hours, then refrigerate for 12–48 hours.',
+      'Combine pâte fermentée, flour, water, yeast, and salt. Mix until no dry flour remains. Let autolyse 20–30 min.',
+      'Knead 5–8 min by hand or mixer until smooth and elastic.',
+      'Cover and ferment 2–3 hours at room temperature, folding 2–3 times during the first hour.',
+      'Divide and shape into loaves or baguettes. Place in bannetons or on parchment.',
+      'Final proof: 1–2 hours at room temperature, or overnight in the fridge for enhanced flavor.',
+      'Preheat oven and baking vessel to 450°F. Score loaves, bake covered 25 min, uncovered 15–20 min until golden and internal temperature reaches 200–210°F.',
+    ],
+    tips: [
+      'Use within 3 days for best results; freeze for longer storage.',
+      'Ideal for rustic French breads and hearty rye loaves.',
+    ],
+    notes: [
+      'Contains salt, unlike biga or poolish.',
+      'Can be made fresh or saved from prior batches.',
+      'Adds depth of flavor and acidity similar to sourdough.',
+    ],
+  },
+  'Levain': {
+    steps: [
+      'Mix starter, flour, and water until smooth. Cover and ferment 8–12 hours at 73–80°F until bubbly, domed, and just beginning to fall.',
+      'Combine levain, flour, water, and salt. Autolyse 30 min, then mix to develop gluten.',
+      'Bulk ferment 3–5 hours with stretch-and-folds every 30 min, until dough is strong and aerated.',
+      'Shape into a boule or batard. Proof 1–2 hours at room temperature or overnight in the fridge.',
+      'Score and bake in a preheated Dutch oven at 450°F for 20 min covered, then 20–25 min uncovered until deep golden.',
+    ],
+    tips: [
+      'Use filtered water — chlorine inhibits wild microbes.',
+      'Rye or whole grain flour boosts microbial activity in the levain.',
+      'Cooler temps favor acetic acid (sharper flavor); warmer temps favor lactic acid (milder and tangy).',
+    ],
+    notes: [
+      'Uses wild yeast and bacteria — no commercial yeast.',
+      'Flavor varies by region, flour type, and feeding schedule.',
+      'Wet levain (100% hydration) or stiff levain (60–70%) — both work, with different flavor profiles.',
+    ],
+  },
+  'Sponge': {
+    steps: [
+      'Combine flour, water, and yeast (or sourdough starter) into a thick, pancake-batter-like mixture.',
+      'Cover and let rise at room temperature until active and bubbly — usually 1–2 hours. Can be refrigerated overnight for deeper flavor.',
+      'Incorporate the ripe sponge into the main dough with remaining flour, salt, and any enrichments (butter, eggs, sugar).',
+      'Knead, bulk ferment, shape, proof, and bake as directed by your specific recipe.',
+    ],
+    tips: [
+      'Best for brioche, challah, panettone, shokupan (Japanese milk bread), and other enriched or soft-textured loaves.',
+      'Use cool water to slow fermentation if needed.',
+      'Do not overferment — use at peak rise for best leavening.',
+      'Can substitute with an equal weight of poolish in some recipes.',
+      'Leftover sponge can be used in pancakes, crackers, or waffles.',
+    ],
+  },
+};
+
+// ─────────────────────────────────────────────
+// CALCULATOR
+// ─────────────────────────────────────────────
+let unit = 'metric';
+let _calcState = {};
+
+function setUnit(u) {
+  unit = u;
+  document.getElementById('btn-metric').classList.toggle('active', u === 'metric');
+  document.getElementById('btn-imperial').classList.toggle('active', u === 'imperial');
+  recalculate();
+}
+
+function fmt(g) {
+  if (g === null || g === undefined || isNaN(g)) return '–';
+  if (unit === 'imperial') return (g / 28.3495).toFixed(1) + ' oz';
+  return Math.round(g) + 'g';
+}
+
+function setCard(id, grams, sub) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.querySelector('.card-val').textContent = fmt(grams);
+  if (sub !== undefined) el.querySelector('.card-sub').textContent = sub;
+}
+
+function recalculate() {
+  const flour    = parseFloat(document.getElementById('totalFlour').value) || 0;
+  const hydSlider = parseFloat(document.getElementById('hydration').value);
+  const saltSlider = parseFloat(document.getElementById('saltPct').value);
+  const yeastType = document.getElementById('yeastType').value;
+  const method   = document.getElementById('prefermentMethod').value;
+  const prefSlider = parseFloat(document.getElementById('prefermentPct').value);
+
+  // Update display labels
+  document.getElementById('hydration-val').textContent    = hydSlider.toFixed(0) + '%';
+  document.getElementById('hydration-display').textContent = hydSlider.toFixed(0) + '%';
+  document.getElementById('saltPct-val').textContent      = saltSlider.toFixed(1) + '%';
+  document.getElementById('saltPct-display').textContent  = saltSlider.toFixed(1) + '%';
+  document.getElementById('prefermentPct-val').textContent    = prefSlider.toFixed(0) + '%';
+  document.getElementById('prefermentPct-display').textContent = prefSlider.toFixed(0) + '%';
+
+  const hydration = hydSlider / 100;
+  const saltPct   = saltSlider / 100;
+  const prefPct   = prefSlider / 100;
+  const yeastPct  = YEAST_PCT[yeastType] ?? 0;
+  const hasPref   = method !== 'None';
+
+  document.getElementById('prefermentPct-row').classList.toggle('hidden', !hasPref);
+
+  const totalWater = flour * hydration;
+  const totalSalt  = flour * saltPct;
+  const totalYeast = flour * yeastPct;
+  const totalDough = flour + totalWater + totalSalt + totalYeast;
+
+  // Store state for Save form
+  _calcState = { flour, hydration, hydSlider, saltPct, saltSlider, yeastType, yeastPct, method,
+                 prefPct, prefSlider, totalWater, totalSalt, totalYeast, totalDough, hasPref };
+
+  if (!hasPref) {
+    document.getElementById('output-simple').classList.remove('hidden');
+    document.getElementById('output-preferment').classList.add('hidden');
+    setCard('out-flour', flour, "baker's 100%");
+    setCard('out-water', totalWater, hydSlider.toFixed(0) + '% hydration');
+    setCard('out-salt',  totalSalt,  saltSlider.toFixed(1) + '% of flour');
+    setCard('out-yeast', totalYeast, yeastPct > 0 ? (yeastPct * 100).toFixed(1) + '% of flour' : 'wild yeast');
+    setCard('out-total', totalDough, 'total dough weight');
+  } else {
+    document.getElementById('output-simple').classList.add('hidden');
+    document.getElementById('output-preferment').classList.remove('hidden');
+
+    const pd = PREF_DATA[method];
+    const prefFlour = flour * prefPct;
+    const prefWater = prefFlour * pd.hydration;
+    const prefSalt  = prefFlour * pd.salt;
+    const prefYeastPct = yeastType === 'Instant' ? pd.instant
+                       : yeastType === 'Active Dry' ? pd.activeDry
+                       : pd.fresh;
+    const prefYeast = prefFlour * prefYeastPct;
+    const prefTotal = prefFlour + prefWater + prefSalt + prefYeast;
+
+    const finalFlour = flour - prefFlour;
+    const finalWater = totalWater - prefWater;
+    const finalSalt  = totalSalt - prefSalt;
+    const finalYeast = Math.max(0, totalYeast - prefYeast);
+    const finalTotal = totalDough;
+
+    document.getElementById('pref-group-label').textContent = method;
+
+    setCard('pref-flour', prefFlour, prefSlider.toFixed(0) + '% of flour');
+    setCard('pref-water', prefWater, (pd.hydration * 100).toFixed(0) + '% hydration');
+    setCard('pref-yeast', prefYeast, prefYeast === 0 ? (method === 'Levain' ? 'wild yeast' : 'from old dough') : (prefYeastPct * 100).toFixed(2) + '% of pref flour');
+
+    // Salt card — only meaningful for Pâte Fermentée
+    const prefSaltCard = document.getElementById('pref-salt');
+    prefSaltCard.classList.toggle('hidden', method !== 'Pâte Fermentée');
+    if (method === 'Pâte Fermentée') {
+      setCard('pref-salt', prefSalt, (pd.salt * 100).toFixed(0) + '% of pref flour');
+    }
+
+    setCard('pref-total', prefTotal, 'preferment weight');
+
+    setCard('final-flour', finalFlour, 'remaining flour');
+    setCard('final-water', finalWater, 'remaining water');
+    setCard('final-salt',  finalSalt,  'remaining salt');
+    setCard('final-yeast', finalYeast, finalYeast === 0 ? 'from preferment' : (yeastPct * 100).toFixed(1) + '% total − pref');
+    setCard('final-total', finalTotal, 'total dough weight');
+
+    document.getElementById('sum-flour').textContent = fmt(flour);
+    document.getElementById('sum-water').textContent = fmt(totalWater);
+    document.getElementById('sum-salt').textContent  = fmt(totalSalt);
+    document.getElementById('sum-total').textContent = fmt(totalDough);
+
+    // Store extra for Save
+    _calcState.prefFlour = prefFlour; _calcState.prefWater = prefWater;
+    _calcState.prefSalt  = prefSalt;  _calcState.prefYeast = prefYeast;
+    _calcState.prefTotal = prefTotal; _calcState.prefYeastPct = prefYeastPct;
+    _calcState.finalFlour = finalFlour; _calcState.finalWater = finalWater;
+    _calcState.finalSalt = finalSalt; _calcState.finalYeast = finalYeast;
+  }
+}
+
+// ─────────────────────────────────────────────
+// INSTRUCTIONS
+// ─────────────────────────────────────────────
+function renderInstructions() {
+  const method = document.getElementById('prefermentMethod').value;
+  const data = INSTRUCTIONS[method] || INSTRUCTIONS['None'];
+  const el = document.getElementById('instr-content');
+  let html = '';
+
+  if (method !== 'None') {
+    html += `<p class="instr-method-label">Showing instructions for: <strong>${method}</strong>. Change the preferment dropdown in the Calculator to update.</p>`;
+  }
+
+  html += '<p class="instr-sub">Steps</p><ol class="steps">';
+  data.steps.forEach(s => { html += `<li><span>${s}</span></li>`; });
+  html += '</ol>';
+
+  if (data.tips && data.tips.length) {
+    html += '<p class="instr-sub">Tips</p>';
+    data.tips.forEach(t => { html += `<div class="tip-block">${t}</div>`; });
+  }
+  if (data.safety && data.safety.length) {
+    html += '<p class="instr-sub">Safety</p>';
+    data.safety.forEach(t => { html += `<div class="tip-block">${t}</div>`; });
+  }
+  if (data.substitution && data.substitution.length) {
+    html += '<p class="instr-sub">Substitutions</p>';
+    data.substitution.forEach(t => { html += `<div class="tip-block">${t}</div>`; });
+  }
+  if (data.storage && data.storage.length) {
+    html += '<p class="instr-sub">Storage</p>';
+    data.storage.forEach(t => { html += `<div class="tip-block">${t}</div>`; });
+  }
+  if (data.notes && data.notes.length) {
+    html += '<p class="instr-sub">Notes on this method</p><ul class="instr-notes">';
+    data.notes.forEach(n => { html += `<li>${n}</li>`; });
+    html += '</ul>';
+  }
+
+  el.innerHTML = html;
+}
+
+// ─────────────────────────────────────────────
+// SAVE THIS BAKE
+// ─────────────────────────────────────────────
+let _keeper = false;
+let _crustRating = 0, _crumbRating = 0;
+
+function toggleSaveForm() {
+  const form = document.getElementById('save-form');
+  const btn  = document.getElementById('save-trigger-btn');
+  const isOpen = form.classList.contains('open');
+  form.classList.toggle('open', !isOpen);
+  btn.textContent = isOpen ? 'Save This Bake ↓' : 'Cancel ↑';
+  if (!isOpen) populateSaveForm();
+}
+
+function populateSaveForm() {
+  const s = _calcState;
+  const dateVal = document.getElementById('bakeDate').value;
+  document.getElementById('sf-date').textContent = dateVal || '–';
+  document.getElementById('sf-name').textContent = document.getElementById('breadName').value || '–';
+  document.getElementById('sf-flour-type').textContent = document.getElementById('flourType').value || '–';
+
+  // Build mini calc grid
+  const grid = document.getElementById('sf-calc-grid');
+  const items = [];
+  if (!s.hasPref) {
+    items.push(['Flour', Math.round(s.flour) + 'g'], ['Water', Math.round(s.totalWater) + 'g'],
+               ['Salt', Math.round(s.totalSalt) + 'g'], ['Yeast', Math.round(s.totalYeast) + 'g'],
+               ['Total dough', Math.round(s.totalDough) + 'g'],
+               ['Hydration', s.hydSlider.toFixed(0) + '%'], ['Salt %', s.saltSlider.toFixed(1) + '%']);
+  } else {
+    items.push(['Total flour', Math.round(s.flour) + 'g'], ['Total water', Math.round(s.totalWater) + 'g'],
+               ['Total salt', Math.round(s.totalSalt) + 'g'], ['Total yeast', Math.round(s.totalYeast) + 'g'],
+               ['Total dough', Math.round(s.totalDough) + 'g'],
+               ['Hydration', s.hydSlider.toFixed(0) + '%'],
+               ['Preferment', s.method + ' ' + s.prefSlider.toFixed(0) + '%'],
+               ['Pref flour', Math.round(s.prefFlour) + 'g'], ['Pref water', Math.round(s.prefWater) + 'g']);
+  }
+  grid.innerHTML = items.map(([l, v]) =>
+    `<div class="save-mini"><div class="save-mini-label">${l}</div><div class="save-mini-val">${v}</div></div>`
+  ).join('');
+
+  // Reset post-bake fields
+  _keeper = false; _crustRating = 0; _crumbRating = 0;
+  document.getElementById('keeper-btn').classList.remove('active');
+  document.getElementById('keeper-hint').textContent = 'Tap to mark as a keeper';
+  renderStars('crust', 0); renderStars('crumb', 0);
+  document.getElementById('crust-note').value = '';
+  document.getElementById('crumb-note').value = '';
+  document.getElementById('sf-finish-wt').value = '';
+  document.getElementById('sf-observations').value = '';
+  document.getElementById('sf-notes').value = '';
+  document.getElementById('save-success').style.display = 'none';
+}
+
+function toggleKeeper() {
+  _keeper = !_keeper;
+  document.getElementById('keeper-btn').classList.toggle('active', _keeper);
+  document.getElementById('keeper-hint').textContent = _keeper ? '★ Marked as a keeper' : 'Tap to mark as a keeper';
+}
+
+function setRating(field, val) {
+  if (field === 'crust') _crustRating = val;
+  else _crumbRating = val;
+  renderStars(field, val);
+}
+
+function renderStars(field, val) {
+  const row = document.getElementById(field + '-stars');
+  row.querySelectorAll('.star-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', i < val);
+  });
+}
+
+function saveBake() {
+  const s = _calcState;
+  const entry = {
+    id: Date.now(),
+    bakeDate:        document.getElementById('bakeDate').value,
+    breadName:       document.getElementById('breadName').value,
+    flourType:       document.getElementById('flourType').value,
+    totalFlourG:     Math.round(s.flour),
+    hydratePct:      s.hydSlider,
+    hydrateG:        Math.round(s.totalWater),
+    saltPct:         s.saltSlider,
+    saltG:           Math.round(s.totalSalt),
+    yeastType:       s.yeastType,
+    yeastPct:        (s.yeastPct * 100).toFixed(2),
+    yeastG:          Math.round(s.totalYeast),
+    prefermentMethod: s.method,
+    prefermentPct:   s.hasPref ? s.prefSlider : 0,
+    prefFlourG:      s.hasPref ? Math.round(s.prefFlour) : 0,
+    prefWaterG:      s.hasPref ? Math.round(s.prefWater) : 0,
+    prefYeastG:      s.hasPref ? +(s.prefYeast).toFixed(2) : 0,
+    prefSaltG:       s.hasPref ? Math.round(s.prefSalt) : 0,
+    prefTotalG:      s.hasPref ? Math.round(s.prefTotal) : 0,
+    finalFlourG:     s.hasPref ? Math.round(s.finalFlour) : Math.round(s.flour),
+    finalWaterG:     s.hasPref ? Math.round(s.finalWater) : Math.round(s.totalWater),
+    finalSaltG:      s.hasPref ? Math.round(s.finalSalt) : Math.round(s.totalSalt),
+    finalYeastG:     s.hasPref ? Math.round(s.finalYeast) : Math.round(s.totalYeast),
+    totalDoughG:     Math.round(s.totalDough),
+    finishWt:        parseFloat(document.getElementById('sf-finish-wt').value) || '',
+    keeper:          _keeper,
+    crust:           _crustRating,
+    crustNote:       document.getElementById('crust-note').value,
+    crumb:           _crumbRating,
+    crumbNote:       document.getElementById('crumb-note').value,
+    observations:    document.getElementById('sf-observations').value,
+    notes:           document.getElementById('sf-notes').value,
+  };
+
+  const log = getLog();
+  log.unshift(entry);
+  localStorage.setItem('bakers_bake_log', JSON.stringify(log));
+
+  document.getElementById('save-success').style.display = 'block';
+  renderLog();
+}
+
+// ─────────────────────────────────────────────
+// BAKE LOG
+// ─────────────────────────────────────────────
+function getLog() {
+  try { return JSON.parse(localStorage.getItem('bakers_bake_log') || '[]'); }
+  catch { return []; }
+}
+
+function starsHtml(n, max) {
+  if (!n) return '<span style="color:var(--cream-d)">–</span>';
+  return Array.from({length: max}, (_, i) =>
+    `<span style="color:${i < n ? '#5E82A0' : '#E8E2D8'}">★</span>`
+  ).join('');
+}
+
+function truncate(s, n) {
+  if (!s) return '–';
+  return s.length > n ? s.slice(0, n) + '…' : s;
+}
+
+function renderLog() {
+  const log = getLog();
+  const container = document.getElementById('log-container');
+  const countEl = document.getElementById('log-count');
+  countEl.textContent = log.length === 0 ? 'No bakes saved yet' : log.length + ' bake' + (log.length !== 1 ? 's' : '') + ' saved';
+
+  if (log.length === 0) {
+    container.innerHTML = '<p class="log-empty">No bakes saved yet — use the Calculator to record your first bake.</p>';
+    return;
+  }
+
+  let html = '<div class="log-scroll"><table class="log-table"><thead><tr>' +
+    '<th>Date</th><th>Name</th><th>Flour</th><th>Hydration</th><th>Preferment</th>' +
+    '<th>Keeper</th><th>Crust</th><th>Crumb</th><th>Observations</th></tr></thead><tbody>';
+
+  log.forEach((e, i) => {
+    html += `<tr class="data-row" onclick="toggleDetail(${i})">
+      <td>${e.bakeDate || '–'}</td>
+      <td>${e.breadName || '–'}</td>
+      <td>${e.flourType || '–'}</td>
+      <td>${e.hydratePct ? e.hydratePct + '%' : '–'}</td>
+      <td>${e.prefermentMethod || 'None'}</td>
+      <td class="log-keeper">${e.keeper ? '★' : ''}</td>
+      <td>${starsHtml(e.crust, 5)}</td>
+      <td>${starsHtml(e.crumb, 5)}</td>
+      <td>${truncate(e.observations, 60)}</td>
+    </tr>
+    <tr class="detail-row hidden" id="detail-${i}">
+      <td colspan="9" class="detail-cell">
+        <div class="detail-inner">
+          <div class="detail-grid">
+            <div><div class="detail-lbl">Total flour</div><div class="detail-val">${e.totalFlourG}g</div></div>
+            <div><div class="detail-lbl">Water</div><div class="detail-val">${e.hydrateG}g (${e.hydratePct}%)</div></div>
+            <div><div class="detail-lbl">Salt</div><div class="detail-val">${e.saltG}g (${e.saltPct}%)</div></div>
+            <div><div class="detail-lbl">Yeast</div><div class="detail-val">${e.yeastG}g ${e.yeastType} (${e.yeastPct}%)</div></div>
+            <div><div class="detail-lbl">Total dough</div><div class="detail-val">${e.totalDoughG}g</div></div>
+            ${e.prefermentMethod && e.prefermentMethod !== 'None' ? `
+            <div><div class="detail-lbl">Preferment</div><div class="detail-val">${e.prefermentMethod} ${e.prefermentPct}%</div></div>
+            <div><div class="detail-lbl">Pref flour</div><div class="detail-val">${e.prefFlourG}g</div></div>
+            <div><div class="detail-lbl">Pref water</div><div class="detail-val">${e.prefWaterG}g</div></div>
+            ` : ''}
+            ${e.finishWt ? `<div><div class="detail-lbl">Finished loaf</div><div class="detail-val">${e.finishWt}g</div></div>` : ''}
+          </div>
+          ${e.crustNote ? `<div class="detail-obs"><strong>Crust:</strong> ${e.crustNote}</div>` : ''}
+          ${e.crumbNote ? `<div class="detail-obs"><strong>Crumb:</strong> ${e.crumbNote}</div>` : ''}
+          ${e.observations ? `<div class="detail-obs"><strong>Observations:</strong> ${e.observations}</div>` : ''}
+          ${e.notes ? `<div class="detail-obs"><strong>Notes:</strong> ${e.notes}</div>` : ''}
+        </div>
+      </td>
+    </tr>`;
+  });
+
+  html += '</tbody></table></div>';
+  container.innerHTML = html;
+}
+
+function toggleDetail(i) {
+  const row = document.getElementById('detail-' + i);
+  if (row) row.classList.toggle('hidden');
+}
+
+// ─────────────────────────────────────────────
+// EXPORT TO EXCEL
+// ─────────────────────────────────────────────
+function exportLog() {
+  const log = getLog();
+  if (!log.length) { alert('No bakes to export yet.'); return; }
+
+  const rows = log.map(e => ({
+    BakeDate:         e.bakeDate,
+    Name:             e.breadName,
+    PrimaryFlour:     e.flourType,
+    'Pflour(g)':      e.totalFlourG,
+    'Hydrate%':       e.hydratePct,
+    'Hydrate(g)':     e.hydrateG,
+    'Salt%':          e.saltPct,
+    'Salt(g)':        e.saltG,
+    YeastType:        e.yeastType,
+    'Yeast%':         e.yeastPct,
+    'Yeast(g)':       e.yeastG,
+    PrefermentMethod: e.prefermentMethod,
+    PrefermentPct:    e.prefermentPct,
+    FinishWt:         e.finishWt,
+    Crust:            e.crust,
+    CrumbRating:      e.crumb,
+    CrumbNotes:       e.crumbNote,
+    Observations:     e.observations,
+    Notes:            e.notes,
+    Keeper:           e.keeper ? 'Yes' : 'No',
+  }));
+
+  const ws = XLSX.utils.json_to_sheet(rows);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'BakeLog');
+  XLSX.writeFile(wb, 'BakeLog_' + new Date().toISOString().slice(0,10) + '.xlsx');
+}
+
+// ─────────────────────────────────────────────
+// STICKY NAV HIGHLIGHT
+// ─────────────────────────────────────────────
+function initNav() {
+  const sections = ['calculator','instructions','bake-log'];
+  const links = { 'calculator': 'nav-calc', 'instructions': 'nav-instr', 'bake-log': 'nav-log' };
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sections.forEach(id => document.getElementById(links[id]).classList.remove('active'));
+        if (links[e.target.id]) document.getElementById(links[e.target.id]).classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
+}
+
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  // Default date to today
+  const today = new Date().toISOString().slice(0, 10);
+  document.getElementById('bakeDate').value = today;
+
+  recalculate();
+  renderInstructions();
+  renderLog();
+  initNav();
+});
+</script>
+</body>
+</html>
