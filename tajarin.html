@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fresh Egg Pasta — dave&amp;mike · Kitchen</title>
+<title>Piedmontese Tajarin — dave&amp;mike · Kitchen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -48,7 +48,7 @@
   .pg-chrome-nav a { font-family: var(--sans); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #7A746C; text-decoration: none; padding: 14px 20px; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
   .pg-chrome-nav a.active, .pg-chrome-nav a:hover { color: #5E82A0; border-bottom-color: #5E82A0; }
 
-  /* PAGE TITLE BLOCK — now lives inside .pg-hero-inner */
+  /* PAGE TITLE BLOCK */
   .pg-hero-title { margin-left: 28px; position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; }
   .pg-eyebrow { font-family: var(--sans); font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: #5E82A0; margin-bottom: 6px; }
   .pg-title { font-family: var(--serif); font-style: italic; font-size: 2rem; font-weight: 400; color: var(--ink); line-height: 1.2; margin-bottom: 4px; }
@@ -67,6 +67,7 @@
 
   .calc-wrap { background: white; border: 0.5px solid rgba(28,26,22,0.1); border-radius: 10px; padding: 2rem; margin-bottom: 1.25rem; }
   .calc-row { margin-bottom: 1.5rem; }
+  .calc-row:last-child { margin-bottom: 0; }
   .calc-label { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 8px; display: block; }
   .slider-row { display: flex; align-items: center; gap: 14px; }
   input[type=range] { flex: 1; -webkit-appearance: none; height: 3px; background: #E8E2D8; border-radius: 2px; outline: none; }
@@ -76,15 +77,12 @@
   .calc-input { font-family: var(--sans); font-size: 15px; font-weight: 400; color: var(--ink); background: var(--cream); border: 0.5px solid rgba(28,26,22,0.18); border-radius: 6px; padding: 9px 12px; outline: none; transition: border-color 0.15s; -moz-appearance: textfield; flex: 0 0 130px; }
   .calc-input:focus { border-color: #5E82A0; }
   .calc-input::-webkit-outer-spin-button, .calc-input::-webkit-inner-spin-button { -webkit-appearance: none; }
-  .egg-unit-tag { font-size: 13px; color: var(--ink-soft); }
+  .yolk-unit-tag { font-size: 13px; color: var(--ink-soft); }
+
   .weigh-note { font-size: 13px; color: var(--ink-mid); margin-top: 10px; line-height: 1.6; background: var(--cream); border: 0.5px solid var(--border); border-radius: 8px; padding: 10px 14px; }
   .weigh-note strong { color: var(--ink); font-weight: 500; }
-  .mini-steps { counter-reset: mstep; list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.75rem; }
-  .mini-steps li { counter-increment: mstep; display: grid; grid-template-columns: 22px 1fr; gap: 0 12px; font-size: 13px; color: var(--ink-mid); line-height: 1.55; }
-  .mini-steps li::before { content: counter(mstep); grid-column: 1; font-family: var(--serif); font-size: 1rem; font-weight: 600; color: #5E82A0; }
-  .mini-steps li > span { grid-column: 2; }
 
-  .toggle-wrap { display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; background: var(--cream); border-radius: 8px; border: 0.5px solid var(--border); }
+  .toggle-wrap { display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; background: var(--cream); border-radius: 8px; border: 0.5px solid var(--border); margin-bottom: 1.5rem; }
   .toggle { position: relative; width: 42px; height: 23px; flex-shrink: 0; margin-top: 2px; }
   .toggle input { opacity: 0; width: 0; height: 0; }
   .toggle-track { position: absolute; inset: 0; background: #E8E2D8; border: 0.5px solid var(--border); border-radius: 12px; cursor: pointer; transition: background 0.2s; }
@@ -93,6 +91,11 @@
   .toggle input:checked ~ .toggle-thumb { transform: translateX(19px); }
   .toggle-title { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 2px; }
   .toggle-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+
+  .mini-steps { counter-reset: mstep; list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.75rem; }
+  .mini-steps li { counter-increment: mstep; display: grid; grid-template-columns: 22px 1fr; gap: 0 12px; font-size: 13px; color: var(--ink-mid); line-height: 1.55; }
+  .mini-steps li::before { content: counter(mstep); grid-column: 1; font-family: var(--serif); font-size: 1rem; font-weight: 600; color: #5E82A0; }
+  .mini-steps li > span { grid-column: 2; }
 
   .cards-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); margin: 1.5rem 0 8px; }
   .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
@@ -124,11 +127,11 @@
   .storage-card ul li { font-size: 13px; color: var(--ink-mid); padding: 3px 0 3px 14px; position: relative; line-height: 1.5; }
   .storage-card ul li::before { content: '–'; position: absolute; left: 0; color: #5E82A0; }
 
-  /* TORTELLINI LINK */
-  .tort-link { margin-top: 28px; padding-top: 24px; border-top: 0.5px solid rgba(28,26,22,0.12); }
-  .tort-link p { font-family: var(--serif); font-style: italic; font-size: 1rem; color: #7A746C; margin-bottom: 8px; }
-  .tort-link a { font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); text-decoration: none; margin-right: 24px; }
-  .tort-link a span { color: #5E82A0; }
+  /* SIBLING RECIPE LINKS */
+  .sib-links { margin-top: 28px; padding-top: 24px; border-top: 0.5px solid rgba(28,26,22,0.12); display: flex; flex-direction: column; gap: 14px; }
+  .sib-links p { font-family: var(--serif); font-style: italic; font-size: 1rem; color: #7A746C; margin-bottom: 8px; }
+  .sib-links a { font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); text-decoration: none; margin-right: 24px; }
+  .sib-links a span { color: #5E82A0; }
 
   /* FOOTER */
   .pg-footer { background: #8AAEC8; padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
@@ -147,8 +150,8 @@
     <a href="https://daveandmike.net"><img src="assets/dnm_logo.svg" alt="dave&amp;mike"></a>
     <div class="pg-hero-title">
       <p class="pg-eyebrow">Kitchen</p>
-      <h1 class="pg-title">Fresh egg pasta</h1>
-      <p class="pg-attr">Adapted from Chef Maria Cristina, Parma, Italy &middot; 2025</p>
+      <h1 class="pg-title">Piedmontese tajarin</h1>
+      <p class="pg-attr">Thin egg-yolk ribbon pasta, Piedmont, Italy</p>
     </div>
   </div>
 </div>
@@ -159,8 +162,7 @@
     <a href="#calculator" class="active">Calculator</a>
     <a href="#recipe">Recipe</a>
     <a href="#storage">Storage</a>
-    <a href="tortellini.html">Tortellini &rarr;</a>
-    <a href="tajarin.html">Tajarin &rarr;</a>
+    <a href="pasta.html">Fresh Egg Pasta &rarr;</a>
   </nav>
   <div class="pg-chrome-right">
     <a href="index.html" class="pg-back">← Kitchen</a>
@@ -175,8 +177,8 @@
     <h2 class="section-title">How many are you feeding?</h2>
 
     <ol class="mini-steps">
-      <li><span>Choose your portion count and enriched/standard style below.</span></li>
-      <li><span>Weigh out the suggested amount of egg &mdash; whole eggs for the standard version, or a mix of whole eggs and extra yolks for Dave's enriched version.</span></li>
+      <li><span>Choose your portion count below.</span></li>
+      <li><span>Weigh out the suggested amount of egg yolk &mdash; yolk only, separated from the white.</span></li>
       <li><span>Enter what you actually weighed. Egg size varies, so this is the real number that matters &mdash; the flour amounts update to match it.</span></li>
     </ol>
 
@@ -196,23 +198,23 @@
         <p class="weigh-note" id="target-note"></p>
       </div>
 
+      <div class="calc-row">
+        <span class="calc-label">Egg yolk &mdash; as weighed</span>
+        <div class="slider-row">
+          <input type="number" id="yolk-input" class="calc-input" min="0" step="0.1">
+          <span class="yolk-unit-tag" id="yolk-unit-label">g</span>
+        </div>
+      </div>
+
       <div class="toggle-wrap">
         <label class="toggle">
-          <input type="checkbox" id="enriched">
+          <input type="checkbox" id="use-semolina" checked>
           <div class="toggle-track"></div>
           <div class="toggle-thumb"></div>
         </label>
         <div>
-          <div class="toggle-title">Dave's version &mdash; enriched yolks</div>
-          <div class="toggle-desc">Extra egg yolks give the pasta a deeper golden color and richer flavor, and the flour scales up slightly with it to keep the dough workable. Substitute some whole eggs with yolks to reach the target weight &mdash; one yolk &asymp; 18g / 0.6oz &nbsp;&middot;&nbsp; one white &asymp; 30g / 1.1oz.</div>
-        </div>
-      </div>
-
-      <div class="calc-row">
-        <span class="calc-label">Egg &mdash; as weighed</span>
-        <div class="slider-row">
-          <input type="number" id="egg-input" class="calc-input" min="0" step="0.1">
-          <span class="egg-unit-tag" id="egg-unit-label">g</span>
+          <div class="toggle-title">Semolina for more tooth</div>
+          <div class="toggle-desc">Traditionally, Piedmontese tajarin is just egg yolk and "00" flour &mdash; no semolina. Toggle <strong>on</strong> to substitute 30% of the flour with semolina, which adds backbone so fine 2mm ribbons hold their shape without tearing. Toggle <strong>off</strong> for the traditional all-"00" version &mdash; silkier, a bit more delicate.</div>
         </div>
       </div>
 
@@ -226,7 +228,7 @@
     </div>
 
     <p style="font-size:13px; color:var(--ink-soft); line-height:1.6;">
-      Weigh your eggs rather than counting them &mdash; grocery store eggs vary from 45g&nbsp;(1.6oz) to 68g&nbsp;(2.4oz), and weight is the most reliable method. The approximate egg count shown is for reference only.
+      Weigh your yolks rather than counting eggs &mdash; grocery store eggs vary too much size to size for counting to be reliable. This dough is yolk-only: no whole eggs, no added water. Save the whites for another use (meringue, egg-white omelet, clarifying stock).
     </p>
   </section>
 
@@ -234,30 +236,31 @@
 
   <section id="recipe">
     <p class="section-label">The recipe</p>
-    <h2 class="section-title">Fresh pasta</h2>
+    <h2 class="section-title">Method &amp; ratios</h2>
 
     <div class="prose">
-      <p>This is Chef Maria Cristina's recipe as she taught it in Parma &mdash; a simple, honest dough that relies entirely on technique and good ingredients. The 60/40 split of <strong>"00" flour and semolina</strong> gives the pasta both tenderness and just enough bite.</p>
+      <p>Tajarin is Piedmont's answer to fresh egg pasta &mdash; thin ribbons, a rich egg-yolk color, and a springy-but-structured bite. The dough is yolk-only, no whole eggs and no added water. Traditionally the flour was just "00" &mdash; nothing else. Substituting some of it with semolina is a newer refinement: it gives the fine-cut ribbons more backbone so they hold their shape without tearing or cracking, where pure "00" alone is silkier but a bit slacker. Use the <strong>semolina toggle</strong> in the calculator above to switch between the two &mdash; 70/30 "00"/semolina for more tooth, or all-"00" for the traditional version.</p>
+      <p>Target texture: pliable but structured &mdash; springy, not stiff, and able to hold a fine 2mm cut without tearing.</p>
     </div>
 
     <ol class="steps">
-      <li>Place all ingredients in a mixing bowl and add salt to taste. For 1&ndash;4 portions, mix and knead by hand on a lightly floured surface. For larger batches, use a stand mixer with a dough hook.</li>
-      <li>Mix until the dough comes together, then knead until very smooth and elastic &mdash; about 8&ndash;10 minutes by hand, or 5&ndash;6 minutes in the mixer on medium speed.</li>
-      <li>Shape into a ball and cover loosely with plastic wrap or an overturned bowl. Rest for a minimum of 30 minutes at room temperature. The dough will relax and become noticeably softer and easier to roll.</li>
-      <li>Cut off a working portion, keeping the rest covered so it does not dry out. Press flat and feed through your pasta machine, working up gradually to setting 6 for most shapes &mdash; this gives a great texture for cut pasta. Setting 7 is very thin and delicate, best reserved for filled pasta like tortellini or ravioli.</li>
-      <li>Lay sheets on the counter to dry slightly, flipping once if the surface is very moist. Cut into your desired shape and cluster into nests.
-        <div class="tip-block" style="margin-top:10px;">
-          <strong>Rice flour tip:</strong> Dust nests with rice flour rather than semolina if you have it. Rice flour's extremely fine, dry particles don't absorb moisture from the pasta the way semolina can, so the nests stay more separate, dry more evenly, and are far less likely to stick or clump together &mdash; especially important if you're drying or freezing. Semolina works fine if that's what you have; no need to purchase rice flour just for this.
-        </div>
-      </li>
-      <li>Cook in well-salted boiling water. Fresh pasta cooks fast &mdash; about 3 to 4 minutes depending on thickness. Taste early.</li>
+      <li><div>Place the weighed egg yolk and both flours in a mixing bowl.</div></li>
+      <li><div><strong>Knead 8&ndash;10 minutes minimum.</strong> The dough looks dry and shaggy at first &mdash; keep going. It becomes smooth and pliable as the gluten hydrates. Don't stop early.</div></li>
+      <li><div><strong>Rest, wrapped tightly, 30&ndash;60 minutes</strong> at room temperature before rolling. This redistributes moisture through the dough and prevents the wet-then-cracky problem of rolling too soon.</div></li>
+      <li><div>Roll to the thinnest or near-thinnest setting on your pasta machine.</div></li>
+      <li><div>Cut at <strong>2mm width</strong> for classic tajarin.</div></li>
     </ol>
 
     <div class="prose" style="margin-top:1.5rem;">
-      <h3>Dave's note on yolks</h3>
-      <p>I've taken to adding extra egg yolks &mdash; for a 4-portion batch, one additional yolk; for 8 portions, two additional yolks, and so on. The result is a noticeably deeper golden color and a richer, more egg-forward flavor. Use the <strong>enriched yolks toggle</strong> in the calculator above to get the adjusted gram target, weigh your own yolk-to-white mix to hit it, then enter the actual weight &mdash; the flour amounts will scale up slightly to match, keeping the dough workable.</p>
-      <h3>A note on salt</h3>
-      <p>Add a generous pinch directly to the dough. The pasta water should be well-salted separately &mdash; the dough itself benefits from a little seasoning as well.</p>
+      <h3>Adjusting the dough</h3>
+      <p><strong>Too wet:</strong> reduce the yolk ratio in 5g increments on your next batch &mdash; or knead and rest longer before judging; a lot of the wet-shaggy feeling resolves on its own with time.</p>
+      <p><strong>Too dry or not pliable:</strong> add water carefully &mdash; a few drops at a time can take a surprisingly long time to bring a dry dough together, so use your own judgment rather than counting drops. If it's especially dry or stiff, start with about &frac12; teaspoon rather than single drops, knead it in fully, and reassess before adding more. Never a whole egg &mdash; that dilutes the yolk-forward flavor.</p>
+      <h3>A note on food safety</h3>
+      <p>Mixed dough covered at room temperature is low-risk and standard practice for the 30&ndash;60 minute rest. If you need to rest it longer than about 2 hours, move it to the fridge.</p>
+    </div>
+
+    <div class="tip-block">
+      <strong>Base ratio, for reference:</strong> yolk weight = 60% of total flour weight (a 55&ndash;65% range works; 60% is the sweet spot), regardless of how that flour is split. This batch's worked example, with the semolina toggle on: 126g yolk to 210g total flour (147g "00" + 63g semolina) &mdash; exactly what the calculator above returns at 2 portions.
     </div>
   </section>
 
@@ -268,7 +271,7 @@
     <h2 class="section-title">Fresh, dried, or frozen</h2>
 
     <div class="prose">
-      <p>Fresh pasta is best cooked the day it's made, but it keeps well with a little planning. The key distinction is whether your pasta is <strong>partially dried</strong> (still pliable) or <strong>fully dried</strong> (brittle, snaps cleanly like store-bought).</p>
+      <p>Fresh tajarin is best cooked the day it's made, but it keeps well with a little planning. The key distinction is whether your pasta is <strong>partially dried</strong> (still pliable) or <strong>fully dried</strong> (brittle, snaps cleanly like store-bought).</p>
     </div>
 
     <div class="storage-grid">
@@ -289,7 +292,7 @@
         </ul>
       </div>
       <div class="storage-card">
-        <p class="storage-card-title">Freezing pasta nests</p>
+        <p class="storage-card-title">Freezing nests</p>
         <ul>
           <li>Dust nests with rice flour before forming &mdash; its fine dry particles prevent sticking far better than semolina (use semolina if that's all you have)</li>
           <li>Flash-freeze on a tray in a single layer for 1&ndash;2 hours until firm</li>
@@ -302,16 +305,18 @@
         <ul>
           <li>Drop frozen nests directly into boiling salted water &mdash; no thawing needed</li>
           <li>Add 1&ndash;2 minutes to your usual cook time</li>
-          <li>Taste early &mdash; they cook faster than you might expect</li>
+          <li>Taste early &mdash; fine ribbons cook fast even from frozen</li>
         </ul>
       </div>
     </div>
   </section>
 
-  <div class="tort-link">
-    <p>The pasta is the same &mdash; the adventure is just beginning.</p>
-    <a href="tortellini.html">Tortellini in brodo <span>&rarr;</span></a>
-    <a href="tajarin.html">Piedmontese tajarin <span>&rarr;</span></a>
+  <div class="sib-links">
+    <p>Same craft, a different ratio.</p>
+    <div>
+      <a href="pasta.html">Fresh egg pasta <span>&rarr;</span></a>
+      <a href="tortellini.html">Tortellini in brodo <span>&rarr;</span></a>
+    </div>
   </div>
 
 </main>
@@ -322,35 +327,21 @@
 </footer>
 
 <script>
-  const BASE = 8, EGG_STD = 220, EGG_ENR = 240, EGG_AVG = 50, G_PER_OZ = 28.3495;
-  const RATIO_STD = 0.55, RATIO_ENR = 0.6; /* egg = % of total flour weight, derived from base 220g/240g over 400g flour */
-  const F00_SPLIT = 0.6, SEM_SPLIT = 0.4;
+  const BASE_PORTIONS = 2, YOLK_PER_PORTION = 63, RATIO = 0.6, G_PER_OZ = 28.3495;
+  const SPLIT_WITH_SEM = { f00: 0.7, sem: 0.3 };
+  const SPLIT_ALL_00 = { f00: 1.0, sem: 0 };
   let unit = 'metric';
-  let eggG = EGG_STD * (4 / BASE);
+  let yolkG = YOLK_PER_PORTION * 4;
 
-  function suggestedEgg(p, enr) { return (enr ? EGG_ENR : EGG_STD) * (p / BASE); }
-
-  function setUnit(u) {
-    unit = u;
-    document.getElementById('btn-metric').className = 'unit-btn' + (u==='metric' ? ' active' : '');
-    document.getElementById('btn-imperial').className = 'unit-btn' + (u==='imperial' ? ' active' : '');
-    syncEggInput();
-    update();
-  }
+  function suggestedYolk(p) { return YOLK_PER_PORTION * p; }
 
   function fmt(g) {
-    if (unit === 'imperial') {
-      const oz = g / G_PER_OZ;
-      return oz.toFixed(1) + ' oz';
-    }
+    if (unit === 'imperial') return (g / G_PER_OZ).toFixed(1) + ' oz';
     return Math.round(g) + 'g';
   }
 
   function fmtYield(g) {
-    if (unit === 'imperial') {
-      const oz = g / G_PER_OZ;
-      return '~' + oz.toFixed(1) + ' oz';
-    }
+    if (unit === 'imperial') return '~' + (g / G_PER_OZ).toFixed(1) + ' oz';
     return '~' + Math.round(g) + 'g';
   }
 
@@ -358,73 +349,79 @@
     return `<div class="card"><div class="card-label">${label}</div><div class="card-val">${val}</div><div class="card-sub">${sub}</div></div>`;
   }
 
-  function syncEggInput() {
-    const input = document.getElementById('egg-input');
-    input.value = unit === 'imperial' ? (eggG / G_PER_OZ).toFixed(2) : Math.round(eggG);
-    document.getElementById('egg-unit-label').textContent = unit === 'imperial' ? 'oz' : 'g';
-  }
-
-  function onPortionsOrToggleChange() {
-    const p = parseInt(document.getElementById('portions').value);
-    const enr = document.getElementById('enriched').checked;
-    document.getElementById('portions-out').textContent = p + ' portion' + (p === 1 ? '' : 's');
-    eggG = suggestedEgg(p, enr);
-    syncEggInput();
+  function setUnit(u) {
+    unit = u;
+    document.getElementById('btn-metric').className = 'unit-btn' + (u === 'metric' ? ' active' : '');
+    document.getElementById('btn-imperial').className = 'unit-btn' + (u === 'imperial' ? ' active' : '');
+    syncYolkInput();
     update();
   }
 
-  function onEggInput() {
-    const raw = parseFloat(document.getElementById('egg-input').value);
+  function syncYolkInput() {
+    const input = document.getElementById('yolk-input');
+    input.value = unit === 'imperial' ? (yolkG / G_PER_OZ).toFixed(2) : Math.round(yolkG);
+    document.getElementById('yolk-unit-label').textContent = unit === 'imperial' ? 'oz' : 'g';
+  }
+
+  function onPortionsChange() {
+    const p = parseInt(document.getElementById('portions').value);
+    document.getElementById('portions-out').textContent = p + ' portion' + (p === 1 ? '' : 's');
+    yolkG = suggestedYolk(p);
+    syncYolkInput();
+    update();
+  }
+
+  function onYolkInput() {
+    const raw = parseFloat(document.getElementById('yolk-input').value);
     if (isNaN(raw) || raw <= 0) return;
-    eggG = unit === 'imperial' ? raw * G_PER_OZ : raw;
+    yolkG = unit === 'imperial' ? raw * G_PER_OZ : raw;
     update();
   }
 
   function update() {
     const p = parseInt(document.getElementById('portions').value);
-    const enr = document.getElementById('enriched').checked;
-    const target = suggestedEgg(p, enr);
-    const ratio = enr ? RATIO_ENR : RATIO_STD;
+    const target = suggestedYolk(p);
 
     document.getElementById('target-note').innerHTML =
-      'For <strong>' + p + ' portion' + (p === 1 ? '' : 's') + '</strong> (' + (enr ? 'enriched' : 'standard') + '), weigh out approximately <strong>' + fmt(target) + '</strong> of egg' + (enr ? ' (whole eggs plus extra yolks)' : '') + '.';
+      'For <strong>' + p + ' portion' + (p === 1 ? '' : 's') + '</strong>, weigh out approximately <strong>' + fmt(target) + '</strong> of egg yolk &mdash; yolk only, no whites, no whole eggs.';
 
-    const totalg = eggG / ratio;
-    const f00g = totalg * F00_SPLIT;
-    const semg = totalg * SEM_SPLIT;
-    const approx = (eggG / EGG_AVG).toFixed(1);
-    const doughTotal = eggG + totalg;
-    const mainG = doughTotal * 0.78;
-    const firstG = doughTotal * 0.52;
+    const useSem = document.getElementById('use-semolina').checked;
+    const split = useSem ? SPLIT_WITH_SEM : SPLIT_ALL_00;
+    const blendLabel = useSem ? '70% “00” / 30% semolina' : '100% “00”, traditional';
 
-    const enrichedBadge = enr ? ' <span style="font-size:11px;background:#5E82A0;color:white;padding:1px 7px;border-radius:4px;vertical-align:middle;margin-left:4px;">enriched</span>' : '';
+    const flourTotal = yolkG / RATIO;
+    const f00 = flourTotal * split.f00;
+    const sem = flourTotal * split.sem;
+    const totalDough = yolkG + flourTotal;
+    const mainG = totalDough * 0.78;
+    const firstG = totalDough * 0.52;
 
     document.getElementById('ingredient-cards').innerHTML =
-      card('Eggs' + enrichedBadge, fmt(eggG), '&asymp; ' + approx + ' eggs, as weighed') +
-      card('"00" flour', fmt(f00g), '60% of flour weight') +
-      card('Semolina flour', fmt(semg), '40% of flour weight');
+      card('Egg yolk (weighed)', fmt(yolkG), 'as entered above') +
+      card('"00" flour', fmt(f00), useSem ? '70% of flour weight' : '100% of flour weight') +
+      card('Semolina flour', fmt(sem), useSem ? '30% of flour weight' : 'not used — traditional');
 
     document.getElementById('yield-cards').innerHTML =
-      card('Total dough', fmt(doughTotal), 'before resting') +
+      card('Total dough', fmt(totalDough), 'before resting') +
       card('Main course', fmtYield(mainG), p + ' generous portions') +
       card('First course', fmtYield(firstG), p + ' lighter portions');
 
-    const diff = eggG - target;
+    const diff = yolkG - target;
     let noteText;
     if (Math.abs(diff) < 1) {
-      noteText = 'Right at the suggested target for ' + p + ' portion' + (p === 1 ? '' : 's') + ' (' + (enr ? 'enriched' : 'standard') + '). Egg is ' + Math.round(ratio * 100) + '% of total flour weight (60% \u201c00\u201d / 40% semolina).';
+      noteText = 'Right at the suggested target for ' + p + ' portion' + (p === 1 ? '' : 's') + '. Yolk is 60% of total flour weight (' + blendLabel + ').';
     } else if (diff > 0) {
-      noteText = 'You weighed ' + fmt(Math.abs(diff)) + ' more egg than the suggested target \u2014 flour has scaled up to match, holding the ' + Math.round(ratio * 100) + '% egg-to-flour ratio.';
+      noteText = 'You weighed ' + fmt(Math.abs(diff)) + ' more yolk than the suggested target — flour has scaled up to match, holding the 60% yolk-to-flour ratio (' + blendLabel + ').';
     } else {
-      noteText = 'You weighed ' + fmt(Math.abs(diff)) + ' less egg than the suggested target \u2014 flour has scaled down to match, holding the ' + Math.round(ratio * 100) + '% egg-to-flour ratio.';
+      noteText = 'You weighed ' + fmt(Math.abs(diff)) + ' less yolk than the suggested target — flour has scaled down to match, holding the 60% yolk-to-flour ratio (' + blendLabel + ').';
     }
     document.getElementById('calc-note').textContent = noteText;
   }
 
-  document.getElementById('portions').addEventListener('input', onPortionsOrToggleChange);
-  document.getElementById('enriched').addEventListener('change', onPortionsOrToggleChange);
-  document.getElementById('egg-input').addEventListener('input', onEggInput);
-  onPortionsOrToggleChange();
+  document.getElementById('portions').addEventListener('input', onPortionsChange);
+  document.getElementById('yolk-input').addEventListener('input', onYolkInput);
+  document.getElementById('use-semolina').addEventListener('change', update);
+  onPortionsChange();
 </script>
 </body>
 </html>
